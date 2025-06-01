@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Flight Booking",
+    "description": "Book domestic and international flights at the best prices with real-time availability and support.",
+    "icon": "FaPlane"
+  },
+  {
+    "id": 2,
+    "title": "Hotel Reservation",
+    "description": "Find and reserve top-rated hotels, resorts, and stays tailored to your budget and preferences.",
+    "icon": "FaHotel"
+  },
+  {
+    "id": 3,
+    "title": "Tour Packages",
+    "description": "Explore curated travel packages including sightseeing, activities, and local experiences.",
+    "icon": "FaSuitcaseRolling"
+  },
+  {
+    "id": 4,
+    "title": "Visa Assistance",
+    "description": "Get help with visa applications, documentation, and interview preparation for smooth approval.",
+    "icon": "FaPassport"
+  },
+  {
+    "id": 5,
+    "title": "Travel Insurance",
+    "description": "Secure your trip with comprehensive travel insurance covering medical, trip delays, and more.",
+    "icon": "FaShieldAlt"
+  },
+  {
+    "id": 6,
+    "title": "Airport Pickup & Drop",
+    "description": "Enjoy hassle-free airport transfers with reliable pickup and drop services across destinations.",
+    "icon": "FaCarSide"
+  }
+]
