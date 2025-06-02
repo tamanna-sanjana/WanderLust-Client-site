@@ -20,9 +20,9 @@ const Navbar = () => {
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: -80, opacity: 0 }}
         transition={{ duration: 0.6, ease: "easeInOut" }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        className={` top-0 left-0 w-full z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-gray-900 shadow-lg"
+            ? "shadow-lg"
             : "bg-transparent backdrop-blur-md"
         }`}
       >
