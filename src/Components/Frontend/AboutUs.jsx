@@ -36,7 +36,7 @@ const owners = [
 
 function AboutUs() {
   return (
-    <div className="relative w-full min-h-screen overflow-hidden">
+    <div className="relative w-full min-h-screen overflow-hidden mt-[-5px]">
       <div className="relative z-10 bg-blue-950 text-white py-16 px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
