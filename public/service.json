@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Domestic Flight Booking",
+    "description": "Book affordable flights between cities with real-time availability and local customer support.",
+    "icon": "FaPlane"
+  },
+  {
+    "id": 2,
+    "title": "Bus Ticketing",
+    "description": "Reserve seats on trusted bus services connecting towns and cities with flexible schedules.",
+    "icon": "FaBus"
+  },
+  {
+    "id": 3,
+    "title": "Train Reservation",
+    "description": "Book train tickets easily for intercity and regional travel with up-to-date timings and seat options.",
+    "icon": "FaTrain"
+  },
+  {
+    "id": 4,
+    "title": "Car Rental & Taxi",
+    "description": "Get reliable car rental and taxi services for city tours, airport transfers, and intercity travel.",
+    "icon": "FaCarSide"
+  },
+  {
+    "id": 5,
+    "title": "Travel Insurance",
+    "description": "Protect your trip with domestic travel insurance covering medical emergencies, trip delays, and more.",
+    "icon": "FaShieldAlt"
+  },
+  {
+    "id": 6,
+    "title": "Tour Packages",
+    "description": "Explore curated domestic tour packages including sightseeing, cultural visits, and adventure activities.",
+    "icon": "FaSuitcaseRolling"
+  }
+]
