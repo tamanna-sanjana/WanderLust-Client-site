@@ -19,7 +19,7 @@ const Navbar = () => {
         isScrolled ? "bg-gray-900 shadow-lg" : "bg-transparent backdrop-blur-sm"
       }`}
     >
-      <nav className="navbar px-4 md:px-10 py-3 text-black font-bold">
+      <nav className="navbar px-4 md:px-10 py-3 text-white font-bold">
         {/* Navbar Start */}
         <div className="navbar-start flex items-center space-x-3">
           <div className="dropdown lg:hidden">
