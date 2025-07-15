@@ -64,7 +64,7 @@ const Navbar = () => {
             </ul>
           </div>
 
-          <h1 className="text-2xl md:text-3xl font-semibold rancho">WanderLust</h1>
+          <h1 className="text-2xl md:text-3xl font-bold ">WanderLust</h1>
         </div>
 
         {/* Navbar Center */}
@@ -90,9 +90,12 @@ const Navbar = () => {
 
         {/* Navbar End - Button */}
         <div className="navbar-end hidden lg:flex">
-          <a className="btn bg-blue-950 rounded-2xl text-xl px-5 py-6 border-1 border-blue-900 hover:bg-cyan-900 transition">
+          <NavLink to="/register" className="btn bg-blue-950 rounded-2xl text-xl px-5 py-6 border-1 border-blue-900 hover:bg-cyan-900 transition">
             Book Now
-          </a>
+          </NavLink>
+          <NavLink to="/login" className="btn bg-blue-950 rounded-2xl text-xl px-5 py-6 border-1 border-blue-900 hover:bg-cyan-900 transition">
+            Book Now
+          </NavLink>
         </div>
       </nav>
     </header>

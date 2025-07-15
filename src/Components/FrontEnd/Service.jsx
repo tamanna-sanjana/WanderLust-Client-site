@@ -72,10 +72,10 @@ const Service = () => {
   }, []);
 
   return (
-    <div className="p-10 bg-blue-950 text-white text-center">
+    <div className="p-10 bg-white text-blue-950 text-center">
       {/* Heading Section */}
       <motion.div
-        className="text-center my-25"
+        className="text-center my-5"
         ref={headingRef}
         initial="hidden"
         animate={headingInView ? "visible" : "hidden"}
@@ -87,7 +87,7 @@ const Service = () => {
         }}
       >
         <motion.h2
-          className="text-7xl md:text-[120px] font-extrabold text-gray-500 leading-none opacity-20"
+          className="text-7xl md:text-[120px] font-extrabold text-black leading-none opacity-20"
           variants={headingVariants}
         >
           SERVICES
@@ -107,7 +107,7 @@ const Service = () => {
 
       {/* Service Cards */}
       <motion.div
-        className="grid gap-6 md:grid-cols-3 mt-10"
+        className="grid gap-6 md:grid-cols-3 mt-30"
         ref={cardsRef}
         variants={containerVariants}
         initial="hidden"

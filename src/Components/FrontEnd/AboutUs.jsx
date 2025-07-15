@@ -26,7 +26,7 @@ const owners = [
 
 const headingVariants = {
   hidden: { opacity: 0, scale: 0.9 },
-  visible: { opacity: 0.1, scale: 1, transition: { duration: 1 } },
+  visible: { opacity: 0.2, scale: 1, transition: { duration: 1 } },
 };
 
 const subheadingVariants = {
@@ -52,7 +52,7 @@ function AboutUs() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
       {/* Foreground Content */}
-      <div className="relative z-10 bg-blue-950 text-white py-16 px-4">
+      <div className="relative z-10 bg-white text-blue-950 py-16 px-4">
         <div className="max-w-6xl mx-auto">
           {/* Heading Section */}
           <motion.div
@@ -66,8 +66,8 @@ function AboutUs() {
             }}
           >
             <motion.h2
-              className="text-7xl md:text-[120px] font-extrabold text-gray-500 leading-none opacity-10"
-              variants={headingVariants}
+              className="text-7xl md:text-[120px] font-extrabold text-black leading-none opacity-20"
+          variants={headingVariants}
             >
               About Us
             </motion.h2>
@@ -78,7 +78,7 @@ function AboutUs() {
             >
               Know Us More
               <motion.div
-                className="w-16 h-1 bg-blue-700 mx-auto mt-2"
+                className="w-16 h-1 bg-blue-800 mx-auto mt-2"
                 variants={underlineVariants}
               />
             </motion.h3>
@@ -89,7 +89,7 @@ function AboutUs() {
             {owners.map((owner, index) => (
               <motion.div
                 key={index}
-                className="grid md:grid-cols-2 gap-8 items-center bg-gray-900 p-6 rounded-xl shadow-lg"
+                className="grid md:grid-cols-2 gap-8 items-center bg-indigo-100 p-6 rounded-xl shadow-3xl"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
