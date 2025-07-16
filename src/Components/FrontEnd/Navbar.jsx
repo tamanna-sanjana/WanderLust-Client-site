@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { NavLink } from "react-router";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,15 +13,20 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleAvatarClick = () => {
+    setShowLogout((prev) => !prev);
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled ? "bg-gray-900 shadow-lg" : "bg-transparent backdrop-blur-sm"
       }`}
     >
-      <nav className="navbar px-4 md:px-10 py-3 text-white font-bold">
+      <nav className="navbar px-4 md:px-10 py-3 text-white font-bold flex justify-between items-center">
         {/* Navbar Start */}
-        <div className="navbar-start flex items-center space-x-3">
+        <div className="flex items-center space-x-3">
+          {/* Mobile Dropdown */}
           <div className="dropdown lg:hidden">
             <button tabIndex={0} className="btn btn-ghost p-0">
               <svg
@@ -41,7 +46,7 @@ const Navbar = () => {
             </button>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 text-white rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 text-white rounded-box z-10 mt-3 w-52 p-2 shadow"
             >
               <li>
                 <NavLink to="/">Home</NavLink>
@@ -58,17 +63,23 @@ const Navbar = () => {
               <li>
                 <NavLink to="/contact">Contact</NavLink>
               </li>
-              <a className="btn bg-blue-950 rounded-2xl text-xl mt-2 px-3 py-4 border-1 border-blue-900 hover:bg-cyan-900 transition">
-                Book Now
-              </a>
+              <li>
+                <NavLink
+                  to="/booking"
+                  className="btn bg-blue-950 rounded-2xl text-xl mt-2 px-3 py-2 hover:bg-cyan-900 transition"
+                >
+                  Book Now
+                </NavLink>
+              </li>
             </ul>
           </div>
 
-          <h1 className="text-2xl md:text-3xl font-bold ">WanderLust</h1>
+          {/* Logo */}
+          <h1 className="text-2xl md:text-3xl font-bold">WanderLust</h1>
         </div>
 
-        {/* Navbar Center */}
-        <div className="navbar-center hidden lg:flex">
+        {/* Navbar Center (Centered Menu) */}
+        <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2">
           <ul className="menu menu-horizontal px-1 text-xl">
             <li>
               <NavLink to="/">Home</NavLink>
@@ -80,22 +91,48 @@ const Navbar = () => {
               <NavLink to="/blog">Blog</NavLink>
             </li>
             <li>
-                <NavLink to="/about">About</NavLink>
-              </li>
+              <NavLink to="/about">About</NavLink>
+            </li>
             <li>
               <NavLink to="/contact">Contact</NavLink>
             </li>
           </ul>
         </div>
 
-        {/* Navbar End - Button */}
-        <div className="navbar-end hidden lg:flex">
-          <NavLink to="/register" className="btn bg-blue-950 rounded-2xl text-xl px-5 py-6 border-1 border-blue-900 hover:bg-cyan-900 transition">
-            Book Now
-          </NavLink>
-          <NavLink to="/login" className="btn bg-blue-950 rounded-2xl text-xl px-5 py-6 border-1 border-blue-900 hover:bg-cyan-900 transition">
-            Book Now
-          </NavLink>
+        {/* Navbar End (Avatar) */}
+        <div className="flex items-center gap-4">
+          {/* Avatar */}
+          <div className="relative group">
+            <div
+              tabIndex={0}
+              className="avatar cursor-pointer"
+              onClick={handleAvatarClick}
+            >
+              <div className="w-10 rounded-full ring ring-blue-700 ring-offset-2 ring-offset-green-100">
+                <img
+                  alt="User Avatar"
+                  src="https://i.ibb.co/dwgMR8yH/My-pic.jpg"
+                />
+              </div>
+            </div>
+
+            {/* Name on Hover */}
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-blue-900 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20 whitespace-nowrap">
+              Tamanna Sanjana
+            </div>
+
+            {/* Logout on Click */}
+            {showLogout && (
+              <ul className="absolute top-14 right-0 bg-white text-blue-950 text-sm rounded shadow-lg z-30 w-50 h-20">
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  DashBoard
+                </li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  Logout
+                </li>
+              </ul>
+            )}
+          </div>
         </div>
       </nav>
     </header>

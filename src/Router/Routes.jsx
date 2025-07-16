@@ -9,8 +9,7 @@ import Packages from "../Components/FrontEnd/Packages";
 import Details from "../Pages/FrontEnd/Details";
 import Blogs from "../Components/FrontEnd/Blogs";
 import BlogDetails from "../Pages/FrontEnd/BlogDetails";
-import Register from "../Pages/FrontEnd/Register";
-import Login from "../Pages/FrontEnd/Login";
+
 
 
 export const router = createBrowserRouter([
@@ -25,16 +24,10 @@ export const router = createBrowserRouter([
         {path: "/details", element:<Details></Details>},
         {path: "/blog", element:<Blogs></Blogs>},
         {path: "/blogdetails", element:<BlogDetails></BlogDetails>},
+
+
     ]
   },
 
-  {
-    path: "/login",
-    element: <Login></Login>,
-  },
-
-  {
-    path: "/register",
-    element: <Register></Register>,
-  },
+  
 ]);
