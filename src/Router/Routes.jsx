@@ -12,6 +12,7 @@ import BlogDetails from "../Pages/FrontEnd/BlogDetails";
 import Login from "../Pages/Backend/Auth/Login";
 import Register from "../Pages/Backend/Auth/Register";
 import ErrorPage from "../Pages/Error/ErrorPage";
+import AdminDashboard from "../Pages/Backend/Admin/AdminDashboard";
 
 
 
@@ -39,6 +40,11 @@ export const router = createBrowserRouter([
   {
     path:"/register",
     element:<Register></Register>
+  },
+  {
+    path:"/admindashboard",
+    element:<AdminDashboard></AdminDashboard>
+
   },
 
   
