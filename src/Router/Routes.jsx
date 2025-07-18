@@ -20,6 +20,7 @@ import Service from "../Pages/Backend/Admin/Service/service";
 import AllServices from "../Pages/Backend/Admin/Service/AllServices";
 import AddPackage from "../Pages/Backend/Admin/Package/AddPackage";
 import AllPackage from "../Pages/Backend/Admin/Package/AllPackage";
+import UserRole from "../Pages/Backend/Admin/Userrole/UserRole";
 
 
 
@@ -59,6 +60,7 @@ export const router = createBrowserRouter([
       {path:"/admindashboard/services/all",element:<AllServices></AllServices>},
       {path:"/admindashboard/packages/add",element:<AddPackage></AddPackage>},
       {path:"/admindashboard/packages/all",element:<AllPackage></AllPackage>},
+      {path:"/admindashboard/roles/add",element:<UserRole></UserRole>},
     ]
 
   },

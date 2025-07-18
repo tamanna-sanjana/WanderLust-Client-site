@@ -196,7 +196,7 @@ const Sidebar = () => {
             {roleOpen && (
               <div className="ml-6 mt-2 space-y-1 text-indigo-200">
                 <NavLink
-                  to="/admin/roles/add"
+                  to="roles/add"
                   className={({ isActive }) =>
                     `flex items-center gap-2 px-3 py-1 rounded text-sm ${
                       isActive
