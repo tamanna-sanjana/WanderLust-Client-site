@@ -10,13 +10,16 @@ import {
   UserCircle,
   Hammer,
   Package,
+  Shield,
+  ShieldCheck,
 } from "lucide-react";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router"; 
 
 const Sidebar = () => {
   const [userOpen, setUserOpen] = useState(false);
   const [serviceOpen, setServiceOpen] = useState(false);
   const [packageOpen, setPackageOpen] = useState(false);
+  const [roleOpen, setRoleOpen] = useState(false);
 
   return (
     <aside className="h-screen w-64 bg-gradient-to-b from-purple-900 via-indigo-800 to-teal-700 text-white border-r border-indigo-700 shadow-xl fixed left-0 top-0 flex flex-col justify-between">
@@ -29,6 +32,7 @@ const Sidebar = () => {
 
         {/* Navigation */}
         <nav className="mt-6 space-y-2 px-4 font-medium text-sm">
+          {/* Dashboard */}
           <NavLink
             to="/admindashboard"
             className={({ isActive }) =>
@@ -43,11 +47,13 @@ const Sidebar = () => {
             Dashboard
           </NavLink>
 
-          {/* User Dropdown */}
+          {/* Users Dropdown */}
           <div>
             <button
               onClick={() => setUserOpen(!userOpen)}
-              className="flex items-center justify-between w-full px-4 py-2 rounded-lg hover:bg-indigo-600 transition"
+              className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition ${
+                userOpen ? "bg-indigo-700 text-white" : "hover:bg-indigo-600"
+              }`}
             >
               <span className="flex items-center gap-3">
                 <Users size={18} />
@@ -59,13 +65,25 @@ const Sidebar = () => {
               <div className="ml-6 mt-2 space-y-1 text-indigo-200">
                 <NavLink
                   to="users/add"
-                  className="flex items-center gap-2 px-3 py-1 rounded hover:bg-indigo-700 text-sm"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
+                      isActive
+                        ? "bg-indigo-700 text-white"
+                        : "hover:bg-indigo-700"
+                    }`
+                  }
                 >
                   <UserPlus size={16} /> Add User
                 </NavLink>
                 <NavLink
                   to="/admin/users/all"
-                  className="flex items-center gap-2 px-3 py-1 rounded hover:bg-indigo-700 text-sm"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
+                      isActive
+                        ? "bg-indigo-700 text-white"
+                        : "hover:bg-indigo-700"
+                    }`
+                  }
                 >
                   <UserCircle size={16} /> All Users
                 </NavLink>
@@ -73,11 +91,13 @@ const Sidebar = () => {
             )}
           </div>
 
-          {/* Service Dropdown */}
+          {/* Services Dropdown */}
           <div>
             <button
               onClick={() => setServiceOpen(!serviceOpen)}
-              className="flex items-center justify-between w-full px-4 py-2 rounded-lg hover:bg-indigo-600 transition"
+              className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition ${
+                serviceOpen ? "bg-indigo-700 text-white" : "hover:bg-indigo-600"
+              }`}
             >
               <span className="flex items-center gap-3">
                 <Hammer size={18} />
@@ -89,13 +109,25 @@ const Sidebar = () => {
               <div className="ml-6 mt-2 space-y-1 text-indigo-200">
                 <NavLink
                   to="/admin/services/add"
-                  className="flex items-center gap-2 px-3 py-1 rounded hover:bg-indigo-700 text-sm"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
+                      isActive
+                        ? "bg-indigo-700 text-white"
+                        : "hover:bg-indigo-700"
+                    }`
+                  }
                 >
                   <Hammer size={16} /> Add Service
                 </NavLink>
                 <NavLink
                   to="/admin/services/all"
-                  className="flex items-center gap-2 px-3 py-1 rounded hover:bg-indigo-700 text-sm"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
+                      isActive
+                        ? "bg-indigo-700 text-white"
+                        : "hover:bg-indigo-700"
+                    }`
+                  }
                 >
                   <Hammer size={16} /> All Services
                 </NavLink>
@@ -103,11 +135,13 @@ const Sidebar = () => {
             )}
           </div>
 
-          {/* Package Dropdown */}
+          {/* Packages Dropdown */}
           <div>
             <button
               onClick={() => setPackageOpen(!packageOpen)}
-              className="flex items-center justify-between w-full px-4 py-2 rounded-lg hover:bg-indigo-600 transition"
+              className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition ${
+                packageOpen ? "bg-indigo-700 text-white" : "hover:bg-indigo-600"
+              }`}
             >
               <span className="flex items-center gap-3">
                 <Package size={18} />
@@ -119,15 +153,71 @@ const Sidebar = () => {
               <div className="ml-6 mt-2 space-y-1 text-indigo-200">
                 <NavLink
                   to="/admin/packages/add"
-                  className="flex items-center gap-2 px-3 py-1 rounded hover:bg-indigo-700 text-sm"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
+                      isActive
+                        ? "bg-indigo-700 text-white"
+                        : "hover:bg-indigo-700"
+                    }`
+                  }
                 >
                   <Package size={16} /> Add Package
                 </NavLink>
                 <NavLink
                   to="/admin/packages/all"
-                  className="flex items-center gap-2 px-3 py-1 rounded hover:bg-indigo-700 text-sm"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
+                      isActive
+                        ? "bg-indigo-700 text-white"
+                        : "hover:bg-indigo-700"
+                    }`
+                  }
                 >
                   <Package size={16} /> All Packages
+                </NavLink>
+              </div>
+            )}
+          </div>
+
+          {/* User Roles Dropdown */}
+          <div>
+            <button
+              onClick={() => setRoleOpen(!roleOpen)}
+              className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition ${
+                roleOpen ? "bg-indigo-700 text-white" : "hover:bg-indigo-600"
+              }`}
+            >
+              <span className="flex items-center gap-3">
+                <ShieldCheck size={18} />
+                User Roles
+              </span>
+              {roleOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+            </button>
+            {roleOpen && (
+              <div className="ml-6 mt-2 space-y-1 text-indigo-200">
+                <NavLink
+                  to="/admin/roles/add"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
+                      isActive
+                        ? "bg-indigo-700 text-white"
+                        : "hover:bg-indigo-700"
+                    }`
+                  }
+                >
+                  <Shield size={16} /> Add Role
+                </NavLink>
+                <NavLink
+                  to="/admin/roles/all"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
+                      isActive
+                        ? "bg-indigo-700 text-white"
+                        : "hover:bg-indigo-700"
+                    }`
+                  }
+                >
+                  <ShieldCheck size={16} /> All Roles
                 </NavLink>
               </div>
             )}

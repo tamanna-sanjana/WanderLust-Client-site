@@ -13,6 +13,8 @@ import Login from "../Pages/Backend/Auth/Login";
 import Register from "../Pages/Backend/Auth/Register";
 import ErrorPage from "../Pages/Error/ErrorPage";
 import AdminDashboard from "../Pages/Backend/Admin/AdminDashboard";
+import Admin from "../Components/Backend/Admin/Admin";
+import AddUser from "../Components/Backend/Admin/User/AddUser";
 
 
 
@@ -43,7 +45,11 @@ export const router = createBrowserRouter([
   },
   {
     path:"/admindashboard",
-    element:<AdminDashboard></AdminDashboard>
+    element:<AdminDashboard></AdminDashboard>,
+    children:[
+      {index:true,element:<Admin></Admin>},
+      {path:"/admindashboard/users/add",element:<AddUser></AddUser>}
+    ]
 
   },
 
