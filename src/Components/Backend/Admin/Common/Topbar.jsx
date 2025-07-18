@@ -17,7 +17,7 @@ const Topbar = ({ toggleSidebar }) => {
   }, []);
 
   return (
-    <header className="w-full h-20 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 shadow-lg px-6 flex justify-between items-center sticky top-0 z-50 text-white font-[Poppins]">
+    <header className="w-full h-20 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 shadow-lg px-6 py-5 flex justify-between items-center sticky top-0 z-50 text-white font-[Poppins]">
       {/* Left: Menu & Title */}
       <div className="flex items-center gap-4">
         <button className="md:hidden text-white" onClick={toggleSidebar}>

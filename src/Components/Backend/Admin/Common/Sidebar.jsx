@@ -13,7 +13,7 @@ import {
   Shield,
   ShieldCheck,
 } from "lucide-react";
-import { NavLink } from "react-router"; 
+import { NavLink } from "react-router";
 
 const Sidebar = () => {
   const [userOpen, setUserOpen] = useState(false);
@@ -22,10 +22,10 @@ const Sidebar = () => {
   const [roleOpen, setRoleOpen] = useState(false);
 
   return (
-    <aside className="h-screen w-64 bg-gradient-to-b from-purple-900 via-indigo-800 to-teal-700 text-white border-r border-indigo-700 shadow-xl fixed left-0 top-0 flex flex-col justify-between">
+    <aside className="h-full w-64 bg-gradient-to-b from-purple-900 via-indigo-800 to-teal-700 text-white border-r border-indigo-700 shadow-xl md:relative fixed z-50">
       {/* Logo */}
       <div>
-        <div className="p-6 border-b border-indigo-600">
+        <div className="p-6 pt-20 md:pt-0 border-b border-indigo-600">
           <h1 className="text-3xl font-extrabold tracking-wide">AdminPanel 🚀</h1>
           <p className="text-sm text-indigo-300 mt-1">Creative Dashboard v1.0</p>
         </div>
@@ -76,7 +76,7 @@ const Sidebar = () => {
                   <UserPlus size={16} /> Add User
                 </NavLink>
                 <NavLink
-                  to="/admin/users/all"
+                  to="users/all"
                   className={({ isActive }) =>
                     `flex items-center gap-2 px-3 py-1 rounded text-sm ${
                       isActive
@@ -108,7 +108,7 @@ const Sidebar = () => {
             {serviceOpen && (
               <div className="ml-6 mt-2 space-y-1 text-indigo-200">
                 <NavLink
-                  to="/admin/services/add"
+                  to="services/add"
                   className={({ isActive }) =>
                     `flex items-center gap-2 px-3 py-1 rounded text-sm ${
                       isActive
@@ -120,7 +120,7 @@ const Sidebar = () => {
                   <Hammer size={16} /> Add Service
                 </NavLink>
                 <NavLink
-                  to="/admin/services/all"
+                  to="services/all"
                   className={({ isActive }) =>
                     `flex items-center gap-2 px-3 py-1 rounded text-sm ${
                       isActive
@@ -152,7 +152,7 @@ const Sidebar = () => {
             {packageOpen && (
               <div className="ml-6 mt-2 space-y-1 text-indigo-200">
                 <NavLink
-                  to="/admin/packages/add"
+                  to="packages/add"
                   className={({ isActive }) =>
                     `flex items-center gap-2 px-3 py-1 rounded text-sm ${
                       isActive

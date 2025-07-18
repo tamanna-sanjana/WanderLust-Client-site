@@ -15,6 +15,10 @@ import ErrorPage from "../Pages/Error/ErrorPage";
 import AdminDashboard from "../Pages/Backend/Admin/AdminDashboard";
 import Admin from "../Components/Backend/Admin/Admin";
 import AddUser from "../Components/Backend/Admin/User/AddUser";
+import AllUser from "../Components/Backend/Admin/User/AllUser";
+import Service from "../Pages/Backend/Admin/Service/service";
+import AllServices from "../Pages/Backend/Admin/Service/AllServices";
+import AddPackage from "../Pages/Backend/Admin/Package/AddPackage";
 
 
 
@@ -48,7 +52,11 @@ export const router = createBrowserRouter([
     element:<AdminDashboard></AdminDashboard>,
     children:[
       {index:true,element:<Admin></Admin>},
-      {path:"/admindashboard/users/add",element:<AddUser></AddUser>}
+      {path:"/admindashboard/users/add",element:<AddUser></AddUser>},
+      {path:"/admindashboard/users/all",element:<AllUser></AllUser>},
+      {path:"/admindashboard/services/add",element:<Service></Service>},
+      {path:"/admindashboard/services/all",element:<AllServices></AllServices>},
+      {path:"/admindashboard/packages/add",element:<AddPackage></AddPackage>},
     ]
 
   },
