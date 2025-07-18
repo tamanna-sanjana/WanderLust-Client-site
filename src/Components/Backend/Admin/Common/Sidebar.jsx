@@ -208,7 +208,7 @@ const Sidebar = () => {
                   <Shield size={16} /> Add Role
                 </NavLink>
                 <NavLink
-                  to="/admin/roles/all"
+                  to="roles/all"
                   className={({ isActive }) =>
                     `flex items-center gap-2 px-3 py-1 rounded text-sm ${
                       isActive
