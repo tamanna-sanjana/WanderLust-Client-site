@@ -164,7 +164,7 @@ const Sidebar = () => {
                   <Package size={16} /> Add Package
                 </NavLink>
                 <NavLink
-                  to="/admin/packages/all"
+                  to="packages/all"
                   className={({ isActive }) =>
                     `flex items-center gap-2 px-3 py-1 rounded text-sm ${
                       isActive
