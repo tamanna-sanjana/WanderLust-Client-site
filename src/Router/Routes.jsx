@@ -9,12 +9,16 @@ import Packages from "../Components/FrontEnd/Packages";
 import Details from "../Pages/FrontEnd/Details";
 import Blogs from "../Components/FrontEnd/Blogs";
 import BlogDetails from "../Pages/FrontEnd/BlogDetails";
+import Login from "../Pages/Backend/Auth/Login";
+import Register from "../Pages/Backend/Auth/Register";
+import ErrorPage from "../Pages/Error/ErrorPage";
 
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
+    errorElement:<ErrorPage></ErrorPage>,
     element: <Root></Root>,
     children:[
         { index:true, element: <Home></Home> },
@@ -27,6 +31,14 @@ export const router = createBrowserRouter([
 
 
     ]
+  },
+  {
+    path:"/login",
+    element:<Login></Login>
+  },
+  {
+    path:"/register",
+    element:<Register></Register>
   },
 
   
