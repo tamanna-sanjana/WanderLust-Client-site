@@ -1,60 +1,31 @@
 import React, { useState } from "react";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditorBase from "@ckeditor/ckeditor5-build-classic";
-
-// Custom CKEditor build extension for image handling
-class MyUploadAdapter {
-  constructor(loader) {
-    this.loader = loader;
-  }
-
-  upload() {
-    return this.loader.file.then((file) => {
-      return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
-          resolve({ default: reader.result });
-        };
-      });
-    });
-  }
-
-  abort() {}
-}
-
-function CustomUploadPlugin(editor) {
-  editor.plugins.get("FileRepository").createUploadAdapter = (loader) => {
-    return new MyUploadAdapter(loader);
-  };
-}
 
 const AddPackage = () => {
   const [formData, setFormData] = useState({
     title: "",
     subtitle: "",
     thumbnail: null,
-    description: "",
+    image1: null,
+    image2: null,
+    shortDescription: "",
+    longDescription: "",
   });
 
   const [thumbPreview, setThumbPreview] = useState(null);
+  const [image1Preview, setImage1Preview] = useState(null);
+  const [image2Preview, setImage2Preview] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleThumbnailChange = (e) => {
+  const handleImageChange = (e, fieldName, setPreview) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData({ ...formData, thumbnail: file });
-      setThumbPreview(URL.createObjectURL(file));
+      setFormData((prev) => ({ ...prev, [fieldName]: file }));
+      setPreview(URL.createObjectURL(file));
     }
-  };
-
-  const handleDescriptionChange = (event, editor) => {
-    const data = editor.getData();
-    setFormData({ ...formData, description: data });
   };
 
   const handleSubmit = (e) => {
@@ -77,7 +48,7 @@ const AddPackage = () => {
             <input
               type="file"
               accept="image/*"
-              onChange={handleThumbnailChange}
+              onChange={(e) => handleImageChange(e, "thumbnail", setThumbPreview)}
               className="w-full p-2 border rounded-lg"
             />
             {thumbPreview && (
@@ -85,6 +56,46 @@ const AddPackage = () => {
                 <img
                   src={thumbPreview}
                   alt="Thumbnail Preview"
+                  className="w-full rounded-xl shadow-md border border-indigo-300"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Image 1 */}
+          <div>
+            <label className="font-medium block mb-2 text-gray-700">Image 1</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e, "image1", setImage1Preview)}
+              className="w-full p-2 border rounded-lg"
+            />
+            {image1Preview && (
+              <div className="mt-4 w-1/3">
+                <img
+                  src={image1Preview}
+                  alt="Image 1 Preview"
+                  className="w-full rounded-xl shadow-md border border-indigo-300"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Image 2 */}
+          <div>
+            <label className="font-medium block mb-2 text-gray-700">Image 2</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => handleImageChange(e, "image2", setImage2Preview)}
+              className="w-full p-2 border rounded-lg"
+            />
+            {image2Preview && (
+              <div className="mt-4 w-1/3">
+                <img
+                  src={image2Preview}
+                  alt="Image 2 Preview"
                   className="w-full rounded-xl shadow-md border border-indigo-300"
                 />
               </div>
@@ -119,54 +130,32 @@ const AddPackage = () => {
             />
           </div>
 
-          {/* Description */}
+          {/* Short Description */}
           <div>
-            <label className="font-medium block mb-2 text-gray-700">Description</label>
-            <div className="border border-gray-300 rounded-lg p-2 bg-white">
-              <CKEditor
-                editor={ClassicEditorBase}
-                data={formData.description}
-                config={{
-                  extraPlugins: [CustomUploadPlugin],
-                  toolbar: [
-                    "heading",
-                    "|",
-                    "bold",
-                    "italic",
-                    "link",
-                    "bulletedList",
-                    "numberedList",
-                    "|",
-                    "insertTable",
-                    "blockQuote",
-                    "imageUpload",
-                    "imageResize",
-                    "mediaEmbed",
-                    "undo",
-                    "redo",
-                    "alignment",
-                    "outdent",
-                    "indent",
-                  ],
-                  image: {
-                    resizeUnit: "%",
-                    toolbar: [
-                      "imageStyle:alignLeft",
-                      "imageStyle:alignCenter",
-                      "imageStyle:alignRight",
-                      "|",
-                      "imageResize",
-                      "imageTextAlternative",
-                    ],
-                    styles: ["alignLeft", "alignCenter", "alignRight"],
-                  },
-                  mediaEmbed: {
-                    previewsInData: true,
-                  },
-                }}
-                onChange={handleDescriptionChange}
-              />
-            </div>
+            <label className="font-medium block mb-2 text-gray-700">Short Description</label>
+            <textarea
+              name="shortDescription"
+              value={formData.shortDescription}
+              onChange={handleInputChange}
+              rows="3"
+              placeholder="Enter a short description..."
+              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-indigo-400 focus:outline-none resize-none"
+              required
+            ></textarea>
+          </div>
+
+          {/* Long Description */}
+          <div>
+            <label className="font-medium block mb-2 text-gray-700">Long Description</label>
+            <textarea
+              name="longDescription"
+              value={formData.longDescription}
+              onChange={handleInputChange}
+              rows="7"
+              placeholder="Enter a detailed description..."
+              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-indigo-400 focus:outline-none resize-none"
+              required
+            ></textarea>
           </div>
 
           {/* Submit */}

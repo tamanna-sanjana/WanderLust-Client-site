@@ -224,7 +224,7 @@ const Sidebar = () => {
           </div>
 
           {/* Settings */}
-          <NavLink
+          {/* <NavLink
             to="/admin/settings"
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2 rounded-lg transition-all ${
@@ -236,7 +236,7 @@ const Sidebar = () => {
           >
             <Settings size={18} />
             Settings
-          </NavLink>
+          </NavLink> */}
         </nav>
       </div>
 
