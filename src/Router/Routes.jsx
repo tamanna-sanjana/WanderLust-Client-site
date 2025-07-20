@@ -24,6 +24,8 @@ import UserRole from "../Pages/Backend/Admin/Userrole/UserRole";
 import AllUserRole from "../Pages/Backend/Admin/Userrole/AllUserRole";
 import ModeratorDashboad from "../Pages/Backend/Moderator/ModeratorDashboad";
 import AddService from "../Pages/Backend/Moderator/Service/AddService";
+import AllService from "../Pages/Backend/Moderator/Service/AllService";
+import AddPackages from "../Pages/Backend/Moderator/Package/AddPackages";
 
 
 
@@ -72,7 +74,9 @@ export const router = createBrowserRouter([
      path:"/moderatordashboard",
     element:<ModeratorDashboad></ModeratorDashboad>,
     children:[
-      {path:"/moderatordashboard/services/add",element:<AddService></AddService>},
+      {path:"/moderatordashboard/service/add",element:<AddService></AddService>},
+      {path:"/moderatordashboard/service/all",element:<AllService></AllService>},
+      {path:"/moderatordashboard/package/add",element:<AddPackages></AddPackages>},
     ]
   }
 

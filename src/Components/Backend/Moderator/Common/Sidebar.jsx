@@ -45,7 +45,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
         </h2>
 
         <nav className="space-y-2">
-          <NavLink to="/moderator" className={menuItemClass}>
+          <NavLink to="/moderatordashboard" className={menuItemClass}>
             <LayoutDashboard size={20} />
             Dashboard
           </NavLink>
@@ -64,11 +64,11 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             </button>
             {openDropdown === "service" && (
               <div className={dropdownClass}>
-                <NavLink to="services/add" className={menuItemClass}>
+                <NavLink to="service/add" className={menuItemClass}>
                   <PlusCircle size={16} />
                   Add Service
                 </NavLink>
-                <NavLink to="/moderator/service/all" className={menuItemClass}>
+                <NavLink to="service/all" className={menuItemClass}>
                   <List size={16} />
                   All Services
                 </NavLink>
@@ -90,7 +90,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             </button>
             {openDropdown === "package" && (
               <div className={dropdownClass}>
-                <NavLink to="/moderator/package/add" className={menuItemClass}>
+                <NavLink to="package/add" className={menuItemClass}>
                   <PlusCircle size={16} />
                   Add Package
                 </NavLink>
