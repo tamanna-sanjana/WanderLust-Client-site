@@ -94,7 +94,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                   <PlusCircle size={16} />
                   Add Package
                 </NavLink>
-                <NavLink to="/moderator/package/all" className={menuItemClass}>
+                <NavLink to="package/all" className={menuItemClass}>
                   <List size={16} />
                   All Packages
                 </NavLink>
