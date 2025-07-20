@@ -128,7 +128,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             )}
           </div>
 
-          <NavLink to="/moderator/book-history" className={menuItemClass}>
+          <NavLink to="book-history" className={menuItemClass}>
             <BookOpen size={20} />
             Book History
           </NavLink>
