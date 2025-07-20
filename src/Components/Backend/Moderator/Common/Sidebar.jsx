@@ -116,7 +116,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             </button>
             {openDropdown === "blog" && (
               <div className={dropdownClass}>
-                <NavLink to="/moderator/blog/add" className={menuItemClass}>
+                <NavLink to="blog/add" className={menuItemClass}>
                   <PlusCircle size={16} />
                   Add Blog
                 </NavLink>

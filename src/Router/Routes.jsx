@@ -27,6 +27,7 @@ import AddService from "../Pages/Backend/Moderator/Service/AddService";
 import AllService from "../Pages/Backend/Moderator/Service/AllService";
 import AddPackages from "../Pages/Backend/Moderator/Package/AddPackages";
 import MyPackage from "../Pages/Backend/Moderator/Package/MyPackage";
+import AddBlog from "../Pages/Backend/Moderator/Blog/AddBlog";
 
 
 
@@ -79,6 +80,7 @@ export const router = createBrowserRouter([
       {path:"/moderatordashboard/service/all",element:<AllService></AllService>},
       {path:"/moderatordashboard/package/add",element:<AddPackages></AddPackages>},
       {path:"/moderatordashboard/package/all",element:<MyPackage></MyPackage>},
+      {path:"/moderatordashboard/blog/add",element:<AddBlog></AddBlog>},
     ]
   }
 
