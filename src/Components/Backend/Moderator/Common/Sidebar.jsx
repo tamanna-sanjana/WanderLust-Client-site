@@ -120,7 +120,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                   <PlusCircle size={16} />
                   Add Blog
                 </NavLink>
-                <NavLink to="/moderator/blog/all" className={menuItemClass}>
+                <NavLink to="blog/all" className={menuItemClass}>
                   <List size={16} />
                   All Blogs
                 </NavLink>
