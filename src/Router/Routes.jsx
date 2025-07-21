@@ -30,6 +30,7 @@ import MyPackage from "../Pages/Backend/Moderator/Package/MyPackage";
 import AddBlog from "../Pages/Backend/Moderator/Blog/AddBlog";
 import AllBlog from "../Pages/Backend/Moderator/Blog/AllBlog";
 import BookHistory from "../Pages/Backend/Moderator/BookHistory";
+import UserDashboard from "../Pages/Backend/User/UserDashboard";
 
 
 
@@ -86,6 +87,11 @@ export const router = createBrowserRouter([
       {path:"/moderatordashboard/blog/all",element:<AllBlog></AllBlog>},
       {path:"/moderatordashboard/book-history",element:<BookHistory></BookHistory>},
     ]
+  },
+  {
+    path:"/userdashboard",
+    element:<UserDashboard></UserDashboard>
+    
   }
 
   
