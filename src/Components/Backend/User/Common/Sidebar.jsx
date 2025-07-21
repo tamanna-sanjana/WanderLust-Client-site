@@ -41,12 +41,12 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             <span className="group-hover:text-yellow-300 transition">Dashboard</span>
           </NavLink>
 
-          <NavLink to="/book-history" className={activeStyle}>
+          <NavLink to="book-history" className={activeStyle}>
             <BookOpen size={22} className="group-hover:text-pink-300 transition" />
             <span className="group-hover:text-pink-300 transition">Book History</span>
           </NavLink>
 
-          <NavLink to="/payment-history" className={activeStyle}>
+          <NavLink to="payment-history" className={activeStyle}>
             <CreditCard size={22} className="group-hover:text-lime-300 transition" />
             <span className="group-hover:text-lime-300 transition">Payment History</span>
           </NavLink>

@@ -31,6 +31,8 @@ import AddBlog from "../Pages/Backend/Moderator/Blog/AddBlog";
 import AllBlog from "../Pages/Backend/Moderator/Blog/AllBlog";
 import BookHistory from "../Pages/Backend/Moderator/BookHistory";
 import UserDashboard from "../Pages/Backend/User/UserDashboard";
+import BookHistories from "../Pages/Backend/User/BookHistories";
+import PaymentHistory from "../Pages/Backend/User/PaymentHistory";
 
 
 
@@ -90,8 +92,12 @@ export const router = createBrowserRouter([
   },
   {
     path:"/userdashboard",
-    element:<UserDashboard></UserDashboard>
-    
+    element:<UserDashboard></UserDashboard>,
+    children:[
+      {path:"book-history",element:<BookHistories></BookHistories>},
+      {path:"payment-history",element:<PaymentHistory></PaymentHistory>}
+    ]
+
   }
 
   
