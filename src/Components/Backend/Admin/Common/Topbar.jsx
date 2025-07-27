@@ -1,7 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Menu, Bell, Search, UserCircle, LogOut, User } from "lucide-react";
+import { useNavigate } from "react-router";
+import { AuthContext } from "../../Provider/AuthContext";
+import Swal from "sweetalert2";
 
 const Topbar = ({ toggleSidebar }) => {
+  const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [profileOpen, setProfileOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -15,6 +21,28 @@ const Topbar = ({ toggleSidebar }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+const handleLogout = async () => {
+  try {
+    await logout();
+    Swal.fire({
+      icon: "success",
+      title: "Logged out successfully",
+      timer: 1500,
+      showConfirmButton: false,
+      position: "top-end",
+      toast: true,
+    });
+    navigate("/");
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Logout failed",
+      text: error.message || "Please try again",
+      confirmButtonText: "OK",
+    });
+  }
+};
 
   return (
     <header className="w-full h-20 bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 shadow-lg px-6 py-5 flex justify-between items-center sticky top-0 z-50 text-white font-[Poppins]">
@@ -68,7 +96,7 @@ const Topbar = ({ toggleSidebar }) => {
               <button
                 type="button"
                 className="flex items-center gap-2 px-4 py-2 hover:bg-red-100 text-red-600 w-full rounded-b-md"
-                onClick={() => alert("Logging out")}
+                onClick={handleLogout}
               >
                 <LogOut size={18} />
                 Logout
