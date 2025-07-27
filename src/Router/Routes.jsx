@@ -33,6 +33,7 @@ import BookHistory from "../Pages/Backend/Moderator/BookHistory";
 import UserDashboard from "../Pages/Backend/User/UserDashboard";
 import BookHistories from "../Pages/Backend/User/BookHistories";
 import PaymentHistory from "../Pages/Backend/User/PaymentHistory";
+import UpdateUser from "../Components/Backend/Admin/User/UpdateUser";
 
 
 
@@ -68,6 +69,7 @@ export const router = createBrowserRouter([
       {index:true,element:<Admin></Admin>},
       {path:"/admindashboard/users/add",element:<AddUser></AddUser>},
       {path:"/admindashboard/users/all",element:<AllUser></AllUser>},
+      {path:"/admindashboard/users/all/edit-user/:id",element:<UpdateUser></UpdateUser>},
       {path:"/admindashboard/services/add",element:<Service></Service>},
       {path:"/admindashboard/services/all",element:<AllServices></AllServices>},
       {path:"/admindashboard/packages/add",element:<AddPackage></AddPackage>},
