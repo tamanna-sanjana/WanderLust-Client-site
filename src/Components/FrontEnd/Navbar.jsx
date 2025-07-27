@@ -20,7 +20,18 @@ const Navbar = () => {
   const handleAvatarClick = () => {
     setShowLogout((prev) => !prev);
   };
-
+ // Redirect based on user role
+  const handleDashboardRedirect = () => {
+    const role = localStorage.getItem("role");
+    if (role === "admin") {
+      navigate("/adminDashboard");
+    } else if(role === "member") {
+      navigate("/moderatordashboard");
+    }
+    else{
+      navigate("/userdashboard");
+    }
+  };
   const handleLogout = async () => {
     await logout();
     navigate("/");
@@ -103,7 +114,7 @@ const Navbar = () => {
 
               {showLogout && (
                 <ul className="absolute top-14 right-0 bg-white text-blue-950 text-sm rounded shadow-lg z-30 w-40">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={() => navigate("/dashboard")}>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleDashboardRedirect}>
                     Dashboard
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>

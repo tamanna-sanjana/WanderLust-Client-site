@@ -1,23 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const AllUserRole = () => {
-  const [roles, setRoles] = useState([
-    { id: 1, name: "Admin", status: "active" },
-    { id: 2, name: "Editor", status: "inactive" },
-    { id: 3, name: "Customer", status: "active" },
-  ]);
+  const [roles, setRoles] = useState([]);
 
-  const handleEdit = (id) => {
-    alert(`Edit Role ID: ${id}`);
-  };
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3000/api/roles");
+        setRoles(data);
+      } catch (error) {
+        console.error("❌ Failed to fetch roles:", error);
+      }
+    };
 
-  const handleDelete = (id) => {
-    const confirm = window.confirm("Are you sure you want to delete this role?");
-    if (confirm) {
-      setRoles(roles.filter((role) => role.id !== id));
+    fetchRoles();
+  }, []);
+
+  const handleDelete = async (id) => {
+  const confirmResult = await Swal.fire({
+    title: "Are you sure?",
+    text: "Do you really want to delete this role?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!",
+  });
+
+  if (confirmResult.isConfirmed) {
+    try {
+      const { data } = await axios.delete(`http://localhost:3000/api/roles/${id}`);
+
+      if (data.deletedCount > 0) {
+        setRoles((prev) => prev.filter((role) => role._id !== id)); // Adjusted for MongoDB _id
+        Swal.fire("Deleted!", "The role has been deleted.", "success");
+      } else {
+        Swal.fire("Not Found", "Role not found or already deleted.", "info");
+      }
+    } catch (error) {
+      console.error("❌ Delete Error:", error);
+      Swal.fire("Error", "Failed to delete role.", "error");
     }
-  };
+  }
+};
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-purple-100 p-6">
@@ -37,30 +65,26 @@ const AllUserRole = () => {
           </thead>
           <tbody className="bg-white">
             {roles.map((role, index) => (
-              <tr key={role.id} className="border-b hover:bg-gray-50 transition">
+              <tr
+                key={role.id}
+                className="border-b hover:bg-gray-50 transition"
+              >
                 <td className="px-6 py-4 font-medium">{index + 1}</td>
-                <td className="px-6 py-4">{role.name}</td>
+                <td className="px-6 py-4">{role.role}</td>
                 <td className="px-6 py-4">
                   <span
                     className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                      role.status === "active"
+                      role.status === 1
                         ? "bg-green-100 text-green-700"
                         : "bg-red-100 text-red-700"
                     }`}
                   >
-                    {role.status}
+                    {role.status === 1 ? "Active" : "Inactive"}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-center flex gap-4 justify-center">
                   <button
-                    onClick={() => handleEdit(role.id)}
-                    className="text-blue-600 hover:text-blue-800 transition"
-                    title="Edit"
-                  >
-                    <Pencil size={18} />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(role.id)}
+                    onClick={() => handleDelete(role._id)}
                     className="text-red-600 hover:text-red-800 transition"
                     title="Delete"
                   >

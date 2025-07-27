@@ -46,6 +46,49 @@ const Sidebar = () => {
             <LayoutDashboard size={18} />
             Dashboard
           </NavLink>
+          {/* User Roles Dropdown */}
+          <div>
+            <button
+              onClick={() => setRoleOpen(!roleOpen)}
+              className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition ${
+                roleOpen ? "bg-indigo-700 text-white" : "hover:bg-indigo-600"
+              }`}
+            >
+              <span className="flex items-center gap-3">
+                <ShieldCheck size={18} />
+                User Roles
+              </span>
+              {roleOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+            </button>
+            {roleOpen && (
+              <div className="ml-6 mt-2 space-y-1 text-indigo-200">
+                <NavLink
+                  to="roles/add"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
+                      isActive
+                        ? "bg-indigo-700 text-white"
+                        : "hover:bg-indigo-700"
+                    }`
+                  }
+                >
+                  <Shield size={16} /> Add Role
+                </NavLink>
+                <NavLink
+                  to="roles/all"
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
+                      isActive
+                        ? "bg-indigo-700 text-white"
+                        : "hover:bg-indigo-700"
+                    }`
+                  }
+                >
+                  <ShieldCheck size={16} /> All Roles
+                </NavLink>
+              </div>
+            )}
+          </div>
 
           {/* Users Dropdown */}
           <div>
@@ -179,49 +222,7 @@ const Sidebar = () => {
             )}
           </div>
 
-          {/* User Roles Dropdown */}
-          <div>
-            <button
-              onClick={() => setRoleOpen(!roleOpen)}
-              className={`flex items-center justify-between w-full px-4 py-2 rounded-lg transition ${
-                roleOpen ? "bg-indigo-700 text-white" : "hover:bg-indigo-600"
-              }`}
-            >
-              <span className="flex items-center gap-3">
-                <ShieldCheck size={18} />
-                User Roles
-              </span>
-              {roleOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-            </button>
-            {roleOpen && (
-              <div className="ml-6 mt-2 space-y-1 text-indigo-200">
-                <NavLink
-                  to="roles/add"
-                  className={({ isActive }) =>
-                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
-                      isActive
-                        ? "bg-indigo-700 text-white"
-                        : "hover:bg-indigo-700"
-                    }`
-                  }
-                >
-                  <Shield size={16} /> Add Role
-                </NavLink>
-                <NavLink
-                  to="roles/all"
-                  className={({ isActive }) =>
-                    `flex items-center gap-2 px-3 py-1 rounded text-sm ${
-                      isActive
-                        ? "bg-indigo-700 text-white"
-                        : "hover:bg-indigo-700"
-                    }`
-                  }
-                >
-                  <ShieldCheck size={16} /> All Roles
-                </NavLink>
-              </div>
-            )}
-          </div>
+          
 
           {/* Settings */}
           {/* <NavLink

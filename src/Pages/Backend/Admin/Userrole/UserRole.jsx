@@ -1,20 +1,36 @@
 import React, { useState } from "react";
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const UserRole = () => {
   const [role, setRole] = useState("");
-  const [status, setStatus] = useState("active");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newRole = {
-      role,
-      status,
-    };
-    console.log("User Role Added:", newRole);
-    // Reset form
-    setRole("");
-    setStatus("active");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const newRole = {
+    role,
+    status: 1,
   };
+
+  try {
+    const { data } = await axios.post("http://localhost:3000/api/roles", newRole);
+
+    if (data.insertedId || data.acknowledged) {
+      setRole("");
+
+      // Show SweetAlert and wait for confirmation before reload
+      Swal.fire("Success", "Role added successfully", "success").then(() => {
+        window.location.reload();
+      });
+    }
+  } catch (error) {
+    console.error("Error adding role:", error);
+    Swal.fire("Error", "Failed to add role", "error");
+  }
+};
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200 flex items-center justify-center p-6">
@@ -39,34 +55,7 @@ const UserRole = () => {
             />
           </div>
 
-          {/* Status */}
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">
-              Status
-            </label>
-            <div className="flex items-center gap-6">
-              <label className="flex items-center gap-2 text-gray-600">
-                <input
-                  type="radio"
-                  value="active"
-                  checked={status === "active"}
-                  onChange={() => setStatus("active")}
-                  className="accent-indigo-600"
-                />
-                Active
-              </label>
-              <label className="flex items-center gap-2 text-gray-600">
-                <input
-                  type="radio"
-                  value="inactive"
-                  checked={status === "inactive"}
-                  onChange={() => setStatus("inactive")}
-                  className="accent-red-500"
-                />
-                Inactive
-              </label>
-            </div>
-          </div>
+
 
           {/* Submit */}
           <div className="text-center">
