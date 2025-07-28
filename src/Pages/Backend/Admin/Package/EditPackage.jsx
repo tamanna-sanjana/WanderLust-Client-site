@@ -47,7 +47,7 @@ const EditPackage = () => {
         { headers: { "Content-Type": "application/json" } }
       );
       Swal.fire("Success", "Package updated successfully", "success");
-      navigate("/admindashboard/packages/all");
+      navigate(-1);
     } catch (error) {
       console.error("Failed to update package:", error.response?.data || error.message);
       Swal.fire("Error", error.response?.data?.message || "Update failed", "error");

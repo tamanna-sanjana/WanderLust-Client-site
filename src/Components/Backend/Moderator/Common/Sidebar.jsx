@@ -51,7 +51,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
           </NavLink>
 
           {/* Service Dropdown */}
-          <div>
+          {/* <div>
             <button
               onClick={() => toggleDropdown("service")}
               className={`${menuItemClass} w-full justify-between`}
@@ -74,7 +74,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                 </NavLink>
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* Package Dropdown */}
           <div>
