@@ -34,6 +34,8 @@ import UserDashboard from "../Pages/Backend/User/UserDashboard";
 import BookHistories from "../Pages/Backend/User/BookHistories";
 import PaymentHistory from "../Pages/Backend/User/PaymentHistory";
 import UpdateUser from "../Components/Backend/Admin/User/UpdateUser";
+import ViewPackage from "../Pages/Backend/Admin/Package/viewPackage";
+import EditPackage from "../Pages/Backend/Admin/Package/EditPackage";
 
 
 
@@ -74,6 +76,8 @@ export const router = createBrowserRouter([
       {path:"/admindashboard/services/all",element:<AllServices></AllServices>},
       {path:"/admindashboard/packages/add",element:<AddPackage></AddPackage>},
       {path:"/admindashboard/packages/all",element:<AllPackage></AllPackage>},
+      {path:"/admindashboard/packages/all/viewpackage/:id",element:<ViewPackage></ViewPackage>},
+      {path:"/admindashboard/packages/all/editpackage/:id",element:<EditPackage></EditPackage>},
       {path:"/admindashboard/roles/add",element:<UserRole></UserRole>},
       {path:"/admindashboard/roles/all",element:<AllUserRole></AllUserRole>},
     ]

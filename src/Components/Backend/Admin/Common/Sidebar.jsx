@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -13,13 +13,38 @@ import {
   Shield,
   ShieldCheck,
 } from "lucide-react";
-import { NavLink } from "react-router";
+import {  NavLink, useNavigate } from "react-router";
+import { AuthContext } from "../../Provider/AuthContext";
+import Swal from "sweetalert2";
 
 const Sidebar = () => {
   const [userOpen, setUserOpen] = useState(false);
+  const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
   const [serviceOpen, setServiceOpen] = useState(false);
   const [packageOpen, setPackageOpen] = useState(false);
   const [roleOpen, setRoleOpen] = useState(false);
+  const handleLogout = async () => {
+    try {
+      await logout();
+      Swal.fire({
+        icon: "success",
+        title: "Logged out successfully",
+        timer: 1500,
+        showConfirmButton: false,
+        position: "top-end",
+        toast: true,
+      });
+      navigate("/");
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Logout failed",
+        text: error.message || "Please try again",
+        confirmButtonText: "OK",
+      });
+    }
+  };
 
   return (
     <aside className="h-full w-64 bg-gradient-to-b from-purple-900 via-indigo-800 to-teal-700 text-white border-r border-indigo-700 shadow-xl md:relative fixed z-50">
@@ -243,7 +268,7 @@ const Sidebar = () => {
 
       {/* Logout */}
       <div className="p-4 border-t border-indigo-600">
-        <button className="w-full flex items-center gap-3 px-4 py-2 text-sm font-semibold text-red-300 hover:bg-red-100/10 rounded-lg transition">
+        <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-2 text-sm font-semibold text-red-300 hover:bg-red-100/10 rounded-lg transition">
           <LogOut size={18} />
           Logout
         </button>
