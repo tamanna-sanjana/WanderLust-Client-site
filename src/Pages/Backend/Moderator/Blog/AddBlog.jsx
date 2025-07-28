@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../../../Components/Backend/Provider/AuthContext";
+import axios from "axios";
 
 const AddBlog = () => {
+  const { user } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     thumbnail: null,
     title: "",
@@ -9,6 +13,24 @@ const AddBlog = () => {
   });
 
   const [thumbnailPreview, setThumbnailPreview] = useState(null);
+
+  const imageUploadUrl = useMemo(() => {
+    return `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_UPLOAD_KEY}`;
+  }, []);
+
+  const uploadImage = async (image) => {
+    try {
+      const imageForm = new FormData();
+      imageForm.append("image", image);
+      const response = await axios.post(imageUploadUrl, imageForm, {
+        timeout: 5000,
+      });
+      return response.data.data.url;
+    } catch (err) {
+      console.error("Image upload failed:", err);
+      return null;
+    }
+  };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -28,11 +50,72 @@ const AddBlog = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Implement your submit logic here
-    console.log(formData);
-    alert("Blog submitted!");
+
+    // ✅ Optional videoUrl validation
+    if (formData.videoUrl && !formData.videoUrl.startsWith("http")) {
+      return Swal.fire({
+        icon: "warning",
+        title: "Invalid Video URL",
+        text: "Please enter a valid video URL (must start with http or https).",
+      });
+    }
+
+    let imageUrl = "";
+
+    // ✅ Upload image to imgbb
+    if (formData.thumbnail) {
+      imageUrl = await uploadImage(formData.thumbnail);
+      if (!imageUrl) {
+        return Swal.fire({
+          icon: "error",
+          title: "Image Upload Failed",
+          text: "Please try again.",
+        });
+      }
+    }
+
+    // ✅ Prepare blog data
+    const blogData = {
+      title: formData.title,
+      article: formData.article,
+      videoUrl: formData.videoUrl || "", // handle optional
+      thumbnail: imageUrl,
+      status: 1,
+      email: user?.email,
+    };
+
+    // ✅ Submit to backend
+    try {
+      const res = await axios.post("http://localhost:3000/api/blogs", blogData);
+      
+
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "✅ Blog submitted!",
+        confirmButtonColor: "#3085d6",
+      });
+
+      // ✅ Reset form
+      setFormData({
+        thumbnail: null,
+        title: "",
+        article: "",
+        videoUrl: "",
+      });
+      setThumbnailPreview(null);
+    } catch (error) {
+      console.error("❌ Failed to submit blog:", error.response?.data || error.message);
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.response?.data?.message || "❌ Failed to submit blog!",
+        confirmButtonColor: "#d33",
+      });
+    }
   };
 
   return (
@@ -111,7 +194,7 @@ const AddBlog = () => {
             />
           </div>
 
-          {/* Video URL */}
+          {/* Video URL (Optional) */}
           <div>
             <label
               htmlFor="videoUrl"
