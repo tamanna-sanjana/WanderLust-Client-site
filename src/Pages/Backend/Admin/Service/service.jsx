@@ -1,37 +1,95 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect, useCallback, useMemo } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../../../Components/Backend/Provider/AuthContext";
 
 const Service = () => {
+  const { user } = useContext(AuthContext);
   const [iconPreview, setIconPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     icon: null,
     title: "",
     subtitle: "",
   });
 
-  const handleImageChange = (e) => {
+  const imageUploadUrl = useMemo(() => {
+    return `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_UPLOAD_KEY}`;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (iconPreview) URL.revokeObjectURL(iconPreview);
+    };
+  }, [iconPreview]);
+
+  const handleImageChange = useCallback((e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData({ ...formData, icon: file });
+      setFormData((prev) => ({ ...prev, icon: file }));
       setIconPreview(URL.createObjectURL(file));
+    }
+  }, []);
+
+  const handleChange = useCallback((e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }, []);
+
+  const uploadImage = async (image) => {
+    try {
+      const data = new FormData();
+      data.append("image", image);
+      const res = await axios.post(imageUploadUrl, data);
+      return res.data.data.url;
+    } catch (error) {
+      console.error("Image upload failed:", error);
+      return null;
     }
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Submit logic here
-    console.log(formData);
-    alert("Service Uploaded!");
+    if (loading) return;
+
+    if (!formData.icon || !formData.title || !formData.subtitle || !user?.email) {
+      return Swal.fire("Error", "All fields are required including user email", "error");
+    }
+
+    setLoading(true);
+
+    let imageUrl;
+    try {
+      imageUrl = await uploadImage(formData.icon);
+      if (!imageUrl) throw new Error("Failed to upload image.");
+    } catch (error) {
+      setLoading(false);
+      return Swal.fire("Image Upload Failed", "Please try again later", "error");
+    }
+
+    const serviceData = {
+      title: formData.title,
+      subtitle: formData.subtitle,
+      iconUrl: imageUrl,
+      email: user.email,
+    };
+
+    try {
+      await axios.post("http://localhost:3000/api/services", serviceData);
+      Swal.fire("✅ Success!", "Your service has been uploaded", "success").then(() => {
+        window.location.reload(); // 🔁 Quick reload after success alert
+      });
+    } catch (err) {
+      console.error("Service upload failed:", err);
+      Swal.fire("Upload Failed", "Something went wrong on the server", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-200 flex items-center justify-center p-6">
       <div className="bg-white shadow-2xl rounded-3xl w-full max-w-2xl p-8">
         <h2 className="text-3xl font-bold text-center text-purple-700 mb-6">Upload Your Service</h2>
-
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Upload Icon */}
           <div>
@@ -41,6 +99,7 @@ const Service = () => {
               accept="image/*"
               onChange={handleImageChange}
               className="w-full bg-white border rounded-lg p-2"
+              required
             />
             {iconPreview && (
               <img
@@ -83,9 +142,14 @@ const Service = () => {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-purple-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-purple-700 hover:scale-105 transition-all shadow-md"
+              disabled={loading}
+              className={`bg-purple-600 text-white px-6 py-3 rounded-full font-semibold shadow-md transition-all ${
+                loading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-purple-700 hover:scale-105"
+              }`}
             >
-              Upload Service 🚀
+              {loading ? "Uploading..." : "Upload Service 🚀"}
             </button>
           </div>
         </form>

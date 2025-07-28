@@ -1,50 +1,46 @@
-import React, { useState } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { Trash2 } from "lucide-react";
 
 const AllServices = () => {
-const [services, setServices] = useState([
-  {
-    id: 1,
-    icon: "https://cdn-icons-png.flaticon.com/512/684/684908.png", // ✈️
-    title: "Flight Booking",
-  },
-  {
-    id: 2,
-    icon: "https://cdn-icons-png.flaticon.com/512/235/235861.png", // 🏨
-    title: "Hotel Reservation",
-  },
-  {
-    id: 3,
-    icon: "https://cdn-icons-png.flaticon.com/512/854/854894.png", // 🚗
-    title: "Car Rentals",
-  },
-  {
-    id: 4,
-    icon: "https://cdn-icons-png.flaticon.com/512/201/201623.png", // 🌍
-    title: "International Tours",
-  },
-  {
-    id: 5,
-    icon: "https://cdn-icons-png.flaticon.com/512/3081/3081559.png", // 🛳️
-    title: "Cruise Trips",
-  },
-  {
-    id: 6,
-    icon: "https://cdn-icons-png.flaticon.com/512/854/854878.png", // 🏝️
-    title: "Holiday Packages",
-  },
-]);
+  const [services, setServices] = useState([]);
 
+  // Fetch all services on mount
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3000/api/services");
+        setServices(data);
+      } catch (err) {
+        console.error("Failed to fetch services", err);
+        Swal.fire("Error", "Could not load services", "error");
+      }
+    };
 
-  const handleEdit = (id) => {
-    alert(`Edit service with ID: ${id}`);
-    // Navigate or open modal to edit
-  };
+    fetchServices();
+  }, []);
 
-  const handleDelete = (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this service?");
-    if (confirmDelete) {
-      setServices((prev) => prev.filter((s) => s.id !== id));
+  const handleDelete = async (id) => {
+    const confirmDelete = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (confirmDelete.isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:3000/api/services/${id}`);
+        setServices((prev) => prev.filter((s) => s._id !== id));
+        Swal.fire("Deleted!", "The service has been removed.", "success");
+      } catch (err) {
+        console.error("Delete error:", err);
+        Swal.fire("Error", "Failed to delete service", "error");
+      }
     }
   };
 
@@ -64,11 +60,11 @@ const [services, setServices] = useState([
           </thead>
           <tbody>
             {services.map((service, index) => (
-              <tr key={service.id} className="hover:bg-purple-50 transition-all">
+              <tr key={service._id} className="hover:bg-purple-50 transition-all">
                 <td className="p-3 border border-purple-200 text-gray-700 font-semibold">{index + 1}</td>
                 <td className="p-3 border border-purple-200">
                   <img
-                    src={service.icon}
+                    src={service.iconUrl}
                     alt="Service Icon"
                     className="h-10 w-10 rounded-full object-cover border shadow"
                   />
@@ -76,14 +72,7 @@ const [services, setServices] = useState([
                 <td className="p-3 border border-purple-200 text-gray-700">{service.title}</td>
                 <td className="p-3 border border-purple-200 text-center">
                   <button
-                    onClick={() => handleEdit(service.id)}
-                    className="text-blue-600 hover:text-blue-800 mr-4"
-                    title="Edit"
-                  >
-                    <Pencil size={20} />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(service.id)}
+                    onClick={() => handleDelete(service._id)}
                     className="text-red-600 hover:text-red-800"
                     title="Delete"
                   >
