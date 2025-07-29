@@ -50,31 +50,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             Dashboard
           </NavLink>
 
-          {/* Service Dropdown */}
-          {/* <div>
-            <button
-              onClick={() => toggleDropdown("service")}
-              className={`${menuItemClass} w-full justify-between`}
-            >
-              <span className="flex items-center gap-2">
-                <Layers size={20} />
-                Service
-              </span>
-              {openDropdown === "service" ? <ChevronUp /> : <ChevronDown />}
-            </button>
-            {openDropdown === "service" && (
-              <div className={dropdownClass}>
-                <NavLink to="service/add" className={menuItemClass}>
-                  <PlusCircle size={16} />
-                  Add Service
-                </NavLink>
-                <NavLink to="service/all" className={menuItemClass}>
-                  <List size={16} />
-                  All Services
-                </NavLink>
-              </div>
-            )}
-          </div> */}
+
 
           {/* Package Dropdown */}
           <div>
@@ -123,6 +99,31 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                 <NavLink to="blog/all" className={menuItemClass}>
                   <List size={16} />
                   All Blogs
+                </NavLink>
+              </div>
+            )}
+          </div>
+                    {/* Guid Dropdown */}
+          <div>
+            <button
+              onClick={() => toggleDropdown("service")}
+              className={`${menuItemClass} w-full justify-between`}
+            >
+              <span className="flex items-center gap-2">
+                <Layers size={20} />
+                Guide
+              </span>
+              {openDropdown === "service" ? <ChevronUp /> : <ChevronDown />}
+            </button>
+            {openDropdown === "service" && (
+              <div className={dropdownClass}>
+                <NavLink to="guide/add" className={menuItemClass}>
+                  <PlusCircle size={16} />
+                  Add Guide
+                </NavLink>
+                <NavLink to="guide/all" className={menuItemClass}>
+                  <List size={16} />
+                  All Guide
                 </NavLink>
               </div>
             )}

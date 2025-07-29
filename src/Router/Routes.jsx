@@ -36,6 +36,8 @@ import PaymentHistory from "../Pages/Backend/User/PaymentHistory";
 import UpdateUser from "../Components/Backend/Admin/User/UpdateUser";
 import ViewPackage from "../Pages/Backend/Admin/Package/viewPackage";
 import EditPackage from "../Pages/Backend/Admin/Package/EditPackage";
+import AddGuide from "../Pages/Backend/Moderator/Guide/AddGuide";
+import AllGuide from "../Pages/Backend/Moderator/Guide/AllGuide";
 
 
 
@@ -91,6 +93,8 @@ export const router = createBrowserRouter([
       // {path:"/moderatordashboard/service/all",element:<AllService></AllService>},
       {path:"/moderatordashboard/package/add",element:<AddPackages></AddPackages>},
       {path:"/moderatordashboard/package/all",element:<MyPackage></MyPackage>},
+      {path:"/moderatordashboard/guide/add",element:<AddGuide></AddGuide>},
+      {path:"/moderatordashboard/guide/all",element:<AllGuide></AllGuide>},
       {path:"/moderatordashboard/package/all/viewpackage/:id",element:<ViewPackage></ViewPackage>},
       {path:"/moderatordashboard/package/all/editpackage/:id",element:<EditPackage></EditPackage>},
       {path:"/moderatordashboard/blog/add",element:<AddBlog></AddBlog>},
