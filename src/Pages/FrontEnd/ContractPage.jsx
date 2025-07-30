@@ -1,0 +1,27 @@
+import React from 'react';
+import Contact from '../../Components/FrontEnd/Contact';
+
+const ContractPage = () => {
+    return (
+        <>
+        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] flex items-center justify-center text-center bg-blue-500">
+  {/* Image with opacity ABOVE background */}
+  <img
+    src="https://i.ibb.co/60rYM9wZ/subscribe-img.jpg"
+    alt="About Us"
+    className="absolute inset-0 w-full h-full object-cover opacity-70"
+  />
+
+  {/* Text on top */}
+  <div className="relative z-10 text-white">
+    <h1 className="text-4xl font-bold">Contact</h1>
+    <a href="/" className="text-blue-800 hover:underline">Home</a>
+  </div>
+</div>
+                <Contact></Contact>
+            
+        </>
+    );
+};
+
+export default ContractPage;

@@ -15,6 +15,8 @@ const EditPackage = () => {
     image2: "",
     shortDescription: "",
     longDescription: "",
+    createdAt: "",
+    email: "",
   });
 
   const [loading, setLoading] = useState(true);
@@ -69,12 +71,12 @@ const EditPackage = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-8 bg-white rounded-xl shadow-2xl mt-10 border border-indigo-300">
+    <div className="max-w-5xl mx-auto p-8 bg-white rounded-xl shadow-2xl mt-10 border border-indigo-300">
       <h1 className="text-4xl font-extrabold mb-8 text-center text-indigo-700 tracking-wide">
         ✨ Edit Package ✨
       </h1>
       <form onSubmit={handleSubmit} className="space-y-8">
-        {/* Text inputs */}
+        {/* Text fields */}
         {["title", "subtitle", "shortDescription", "longDescription"].map((field) => (
           <div key={field}>
             <label
@@ -109,7 +111,7 @@ const EditPackage = () => {
           </div>
         ))}
 
-        {/* Image URL inputs with preview */}
+        {/* Image URL inputs */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {["thumbnail", "image1", "image2"].map((field) => (
             <div key={field}>
@@ -142,11 +144,37 @@ const EditPackage = () => {
           ))}
         </div>
 
+        {/* Read-only fields */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label className="block text-indigo-900 font-semibold mb-2 text-lg">
+              Created At
+            </label>
+            <input
+              type="text"
+              value={new Date(formData.createdAt).toLocaleString()}
+              readOnly
+              className="w-full bg-gray-100 border border-indigo-300 rounded-lg px-4 py-2 shadow"
+            />
+          </div>
+          <div>
+            <label className="block text-indigo-900 font-semibold mb-2 text-lg">
+              Email
+            </label>
+            <input
+              type="email"
+              value={formData.email}
+              readOnly
+              className="w-full bg-gray-100 border border-indigo-300 rounded-lg px-4 py-2 shadow"
+            />
+          </div>
+        </div>
+
         <button
           type="submit"
           className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
         >
-          Update Package
+          ✅ Update Package
         </button>
       </form>
     </div>

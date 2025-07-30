@@ -2,6 +2,8 @@ import React, { useMemo, useState, useContext } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../../Components/Backend/Provider/AuthContext";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddPackage = () => {
   const { user } = useContext(AuthContext);
@@ -14,17 +16,23 @@ const AddPackage = () => {
     image2: null,
     shortDescription: "",
     longDescription: "",
+    price: "",
+    duration: "",
+    location: "",
+    departureDate: "",
+    returnDate: "",
+    features: "",
   });
 
   const imageUploadUrl = useMemo(() => {
-    return `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_UPLOAD_KEY}`;
+    return `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_UPLOAD_KEY
+    }`;
   }, []);
 
   const [thumbPreview, setThumbPreview] = useState(null);
   const [image1Preview, setImage1Preview] = useState(null);
   const [image2Preview, setImage2Preview] = useState(null);
-
-  // Loading state to disable submit during upload
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
@@ -42,7 +50,6 @@ const AddPackage = () => {
 
   const uploadImage = async (image) => {
     if (!image) return null;
-
     try {
       const data = new FormData();
       data.append("image", image);
@@ -56,7 +63,7 @@ const AddPackage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isLoading) return; // Prevent multiple submissions
+    if (isLoading) return;
 
     setIsLoading(true);
 
@@ -75,7 +82,11 @@ const AddPackage = () => {
 
       if (!thumbUrl || !image1Url || !image2Url) {
         Swal.close();
-        Swal.fire("Upload Failed", "One or more images failed to upload.", "error");
+        Swal.fire(
+          "Upload Failed",
+          "One or more images failed to upload.",
+          "error"
+        );
         setIsLoading(false);
         return;
       }
@@ -88,6 +99,12 @@ const AddPackage = () => {
         image2: image2Url,
         shortDescription: formData.shortDescription,
         longDescription: formData.longDescription,
+        price: formData.price,
+        duration: formData.duration,
+        location: formData.location,
+        departureDate: formData.departureDate,
+        returnDate: formData.returnDate,
+        features: formData.features.split(",").map((f) => f.trim()),
         createdAt: new Date(),
         email: user?.email || "no-reply@example.com",
         status: 1,
@@ -103,7 +120,6 @@ const AddPackage = () => {
         timer: 1500,
       });
 
-      // Reset form & previews
       setFormData({
         title: "",
         subtitle: "",
@@ -112,14 +128,25 @@ const AddPackage = () => {
         image2: null,
         shortDescription: "",
         longDescription: "",
+        price: "",
+        duration: "",
+        location: "",
+        departureDate: "",
+        returnDate: "",
+        features: "",
       });
+
       setThumbPreview(null);
       setImage1Preview(null);
       setImage2Preview(null);
     } catch (err) {
       Swal.close();
       console.error("❌ Submission failed:", err);
-      Swal.fire("Error", "Something went wrong while saving the package.", "error");
+      Swal.fire(
+        "Error",
+        "Something went wrong while saving the package.",
+        "error"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -138,13 +165,11 @@ const AddPackage = () => {
             preview={thumbPreview}
             onChange={(e) => handleImageChange(e, "thumbnail", setThumbPreview)}
           />
-
           <InputImage
             label="Image 1"
             preview={image1Preview}
             onChange={(e) => handleImageChange(e, "image1", setImage1Preview)}
           />
-
           <InputImage
             label="Image 2"
             preview={image2Preview}
@@ -158,13 +183,79 @@ const AddPackage = () => {
             onChange={handleInputChange}
             placeholder="Enter package title"
           />
-
           <InputText
             label="Subtitle"
             name="subtitle"
             value={formData.subtitle}
             onChange={handleInputChange}
-            placeholder="Enter package subtitle"
+            placeholder="Enter subtitle"
+          />
+          <InputText
+            label="Price ($)"
+            name="price"
+            value={formData.price}
+            onChange={handleInputChange}
+            placeholder="Ex: 499"
+          />
+          <InputText
+            label="Duration"
+            name="duration"
+            value={formData.duration}
+            onChange={handleInputChange}
+            placeholder="Ex: 5 Days / 4 Nights"
+          />
+          <InputText
+            label="Location"
+            name="location"
+            value={formData.location}
+            onChange={handleInputChange}
+            placeholder="Ex: Cox's Bazar, Maldives"
+          />
+
+          <div className="w-full">
+            <label className="font-medium block mb-2 text-gray-700">Departure Date</label>
+            <DatePicker
+              selected={
+                formData.departureDate ? new Date(formData.departureDate) : null
+              }
+              onChange={(date) =>
+                setFormData({
+                  ...formData,
+                  departureDate: date.toISOString().split("T")[0],
+                })
+              }
+              placeholderText="Select Departure Date"
+              dateFormat="yyyy-MM-dd"
+              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-indigo-400 focus:outline-none"
+              required
+            />
+          </div>
+
+          <div className="w-full">
+            <label className="font-medium block mb-2 text-gray-700">Return Date</label>
+            <DatePicker
+              selected={
+                formData.returnDate ? new Date(formData.returnDate) : null
+              }
+              onChange={(date) =>
+                setFormData({
+                  ...formData,
+                  returnDate: date.toISOString().split("T")[0],
+                })
+              }
+              placeholderText="Select Return Date"
+              dateFormat="yyyy-MM-dd"
+              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-indigo-400 focus:outline-none"
+              required
+            />
+          </div>
+
+          <InputText
+            label="Features"
+            name="features"
+            value={formData.features}
+            onChange={handleInputChange}
+            placeholder="e.g. Hotel, Flight, Guide"
           />
 
           <InputTextarea
@@ -175,7 +266,6 @@ const AddPackage = () => {
             rows={3}
             placeholder="Enter a short description..."
           />
-
           <InputTextarea
             label="Long Description"
             name="longDescription"
@@ -204,21 +294,21 @@ const AddPackage = () => {
 
 // Reusable Components
 const InputImage = ({ label, preview, onChange }) => (
-  <div>
+  <div className="w-full">
     <label className="font-medium block mb-2 text-gray-700">{label}</label>
     <input
       type="file"
       accept="image/*"
       onChange={onChange}
-      className="w-full p-2 border rounded-lg"
+      className="w-full p-2 border border-gray-300 rounded-lg"
       required
     />
     {preview && (
-      <div className="mt-4 w-1/3">
+      <div className="mt-4">
         <img
           src={preview}
           alt={`${label} Preview`}
-          className="w-full rounded-xl shadow-md border border-indigo-300"
+          className="w-full md:w-1/3 rounded-xl shadow-md border border-indigo-300"
         />
       </div>
     )}
@@ -226,7 +316,7 @@ const InputImage = ({ label, preview, onChange }) => (
 );
 
 const InputText = ({ label, name, value, onChange, placeholder }) => (
-  <div>
+  <div className="w-full">
     <label className="font-medium block mb-2 text-gray-700">{label}</label>
     <input
       type="text"
@@ -241,7 +331,7 @@ const InputText = ({ label, name, value, onChange, placeholder }) => (
 );
 
 const InputTextarea = ({ label, name, value, onChange, rows, placeholder }) => (
-  <div>
+  <div className="w-full">
     <label className="font-medium block mb-2 text-gray-700">{label}</label>
     <textarea
       name={name}

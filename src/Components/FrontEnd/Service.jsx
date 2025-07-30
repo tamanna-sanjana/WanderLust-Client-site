@@ -8,6 +8,8 @@ import {
   FaSuitcaseRolling,
 } from "react-icons/fa";
 import { motion, useInView } from "framer-motion";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 // Icon mapping
 const iconMap = {
@@ -62,13 +64,19 @@ const Service = () => {
   const cardsRef = useRef(null);
   const cardsInView = useInView(cardsRef, { once: true, margin: "-100px" });
 
+  // Fetch all services on mount
   useEffect(() => {
-    fetch("/service.json")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchServices = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3000/api/services");
         setServices(data);
-      })
-      .catch((err) => console.error("Failed to fetch services:", err));
+      } catch (err) {
+        console.error("Failed to fetch services", err);
+        Swal.fire("Error", "Could not load services", "error");
+      }
+    };
+
+    fetchServices();
   }, []);
 
   return (
@@ -125,13 +133,22 @@ const Service = () => {
                 boxShadow: "0 10px 20px rgba(0,0,0,0.4)",
               }}
             >
-              <div className="card-body items-center text-center">
-                <div className="text-4xl text-blue-950 mb-4">
-                  {IconComponent && <IconComponent />}
-                </div>
-                <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
-                <p className="text-lg">{service.description}</p>
-              </div>
+  <div className="card-body items-center text-center">
+  {service.iconUrl && (
+    <img
+      src={service.iconUrl}
+      alt={service.title}
+      className="w-24 h-24 object-cover rounded-full mb-4"
+    />
+  )}
+  <div className="text-4xl text-blue-950 mb-4">
+    {IconComponent && <IconComponent />}
+  </div>
+  <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
+  <p className="text-lg">{service.subtitle}</p>
+</div>
+
+
             </motion.div>
           );
         })}

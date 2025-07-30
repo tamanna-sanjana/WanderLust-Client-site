@@ -7,6 +7,7 @@ const Service = () => {
   const { user } = useContext(AuthContext);
   const [iconPreview, setIconPreview] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     icon: null,
     title: "",
@@ -42,49 +43,55 @@ const Service = () => {
       const res = await axios.post(imageUploadUrl, data);
       return res.data.data.url;
     } catch (error) {
-      console.error("Image upload failed:", error);
+      console.error("❌ Image upload failed:", error);
       return null;
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (loading) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (loading) return;
 
-    if (!formData.icon || !formData.title || !formData.subtitle || !user?.email) {
-      return Swal.fire("Error", "All fields are required including user email", "error");
-    }
+  const { icon, title, subtitle } = formData;
 
-    setLoading(true);
+  if (!icon || !title || !subtitle || !user?.email) {
+    return Swal.fire("Error", "All fields are required including user email", "error");
+  }
 
-    let imageUrl;
-    try {
-      imageUrl = await uploadImage(formData.icon);
-      if (!imageUrl) throw new Error("Failed to upload image.");
-    } catch (error) {
-      setLoading(false);
-      return Swal.fire("Image Upload Failed", "Please try again later", "error");
-    }
+  setLoading(true);
+
+  try {
+    const iconUrl = await uploadImage(icon);
+    if (!iconUrl) throw new Error("Failed to upload image");
 
     const serviceData = {
-      title: formData.title,
-      subtitle: formData.subtitle,
-      iconUrl: imageUrl,
+      title,
+      subtitle,
+      iconUrl,
       email: user.email,
     };
 
-    try {
-      await axios.post("http://localhost:3000/api/services", serviceData);
-      Swal.fire("✅ Success!", "Your service has been uploaded", "success").then(() => {
-        window.location.reload(); // 🔁 Quick reload after success alert
-      });
-    } catch (err) {
-      console.error("Service upload failed:", err);
-      Swal.fire("Upload Failed", "Something went wrong on the server", "error");
-    } finally {
-      setLoading(false);
-    }
-  };
+    await axios.post("http://localhost:3000/api/services", serviceData);
+
+    Swal.fire("✅ Success", "Service uploaded successfully", "success").then(() => {
+      window.location.reload(); // ✅ Correct way to reload
+    });
+
+    // Clear form (optional if not reloading)
+    setFormData({
+      icon: null,
+      title: "",
+      subtitle: "",
+    });
+    setIconPreview(null);
+  } catch (err) {
+    console.error("❌ Service upload failed:", err);
+    Swal.fire("Upload Failed", "Something went wrong. Try again.", "error");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-200 flex items-center justify-center p-6">
@@ -144,9 +151,7 @@ const Service = () => {
               type="submit"
               disabled={loading}
               className={`bg-purple-600 text-white px-6 py-3 rounded-full font-semibold shadow-md transition-all ${
-                loading
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-purple-700 hover:scale-105"
+                loading ? "opacity-50 cursor-not-allowed" : "hover:bg-purple-700 hover:scale-105"
               }`}
             >
               {loading ? "Uploading..." : "Upload Service 🚀"}

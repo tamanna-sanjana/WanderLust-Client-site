@@ -129,6 +129,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             )}
           </div>
 
+
           <NavLink to="book-history" className={menuItemClass}>
             <BookOpen size={20} />
             Book History
