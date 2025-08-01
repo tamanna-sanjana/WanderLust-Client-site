@@ -65,7 +65,7 @@ const GuideSection = () => {
             initial={{ opacity: 0, y: 50 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.4, delay: index * 0.15 }}
-            className="bg-indigo-300 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+            className="bg-indigo-300 hover:bg-blue-400 rounded-xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300"
           >
             <img
               src={guide.image}

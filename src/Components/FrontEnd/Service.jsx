@@ -126,7 +126,7 @@ const Service = () => {
           return (
             <motion.div
               key={service.id}
-              className="card bg-gray-400 shadow-xl text-black transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:bg-cyan-900"
+              className="card bg-blue-200 shadow-2xl text-black transform transition duration-300 hover:scale-105 hover:shadow-2xl hover:bg-cyan-900"
               variants={cardVariants}
               whileHover={{
                 scale: 1.05,

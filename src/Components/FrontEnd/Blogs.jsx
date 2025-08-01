@@ -75,7 +75,7 @@ const Blogs = () => {
             {blogs.map((blog) => (
               <div
                 key={blog._id}
-                className="bg-white rounded-lg shadow-md overflow-hidden border hover:shadow-xl transition duration-300"
+                className="bg-white rounded-lg shadow-2xl overflow-hidden border-none hover:shadow-2xl transition duration-300"
               >
                 <img
                   src={blog.thumbnail}

@@ -1,186 +1,220 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate, useParams } from "react-router";
+import axios from "axios";
+import { AuthContext } from "../../Components/Backend/Provider/AuthContext";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 
-export default function BookingSection() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    days: "",
-    date: "",
-    destination: "Sylhet",
-    persons: "1",
-    package: "Sylhet Tea Garden",
-    request: "",
-  });
+const Booking = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { user } = useContext(AuthContext);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const [pkg, setPkg] = useState(null);
+  const [paymentMethod] = useState("Bkash");
+  const [showModal, setShowModal] = useState(false);
+  const [bkashNumber, setBkashNumber] = useState("");
+  const [persons, setPersons] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/api/packages/${id}`)
+      .then((res) => {
+        setPkg(res.data);
+        setTotalPrice(res.data.price); // initial total price
+      })
+      .catch((err) => console.error("Package fetch failed", err));
+  }, [id]);
+
+  useEffect(() => {
+    if (pkg) {
+      setTotalPrice(pkg.price * persons);
+    }
+  }, [persons, pkg]);
+
+  const handleBooking = async (e) => {
+    e.preventDefault();
+    setShowModal(true); // Show the modal after confirm payment
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const { name, email, days, date } = formData;
-    if (!name || !email || !days || !date) {
-      Swal.fire({
-        icon: "warning",
-        title: "Please fill in all required fields",
-      });
+  const handleBkashPay = async () => {
+    if (!bkashNumber || bkashNumber.length < 11) {
+      Swal.fire("Invalid", "Please enter a valid Bkash number", "warning");
       return;
     }
 
-    Swal.fire({
-      icon: "success",
-      title: "Booking Confirmed!",
-      text: `Your booking for ${formData.package} is received.`,
-    });
+    const bookingData = {
+      title: pkg.title,
+      authorEmail: pkg.email,
+      userEmail: user.email,
+      packageId: id,
+      persons: persons,
+    };
 
-    setFormData({
-      name: "",
-      email: "",
-      days: "",
-      date: "",
-      destination: "Sylhet",
-      persons: "1",
-      package: "Sylhet Tea Garden",
-      request: "",
-    });
+    const paymentData = {
+      userEmail: user.email,
+      method: paymentMethod,
+      amount: totalPrice,
+      packageId: id,
+      bkashNumber,
+    };
+
+    try {
+      await axios.post("http://localhost:3000/api/bookings", bookingData);
+      await axios.post("http://localhost:3000/api/payments", paymentData);
+
+      Swal.fire("Success", "Booking and payment completed!", "success").then(() => {
+        setShowModal(false);
+        setBkashNumber("");
+        navigate("/"); // ✅ redirect to homepage
+      });
+    } catch (error) {
+      console.error("Payment failed:", error);
+      Swal.fire("Error", "Something went wrong.", "error");
+    }
   };
+
+  if (!pkg) return <div className="text-center mt-20 text-lg">Loading...</div>;
 
   return (
     <>
-      {/* Header */}
-      <div className="text-center pt-12 pb-4 mb-20">
-        <h2 className="text-4xl md:text-[100px] font-extrabold text-black leading-none opacity-20">
-          Book Your Adventure
-        </h2>
-        <h3 className="text-3xl font-semibold md:-mt-16 -mt-12 text-blue-950 relative z-10">
-          Reserve Your Journey
-          <div className="w-16 h-1 bg-blue-800 mx-auto mt-2 rounded-full"></div>
-        </h3>
-      </div>
-
-      <div
-        className="w-full min-h-screen flex items-center justify-center bg-cover bg-center px-4 md:px-6 py-12 md:py-16"
-        style={{
-          backgroundImage: `url('https://i.ibb.co/6Jb6339W/ABQ-International-Balloon-Festival.jpg')`,
-        }}
-      >
-        <div className="bg-blue-700/80 backdrop-blur-md rounded-xl shadow-2xl p-6 md:p-10 w-full max-w-6xl grid md:grid-cols-2 gap-6 md:gap-8 text-white">
-          {/* Left Info */}
-          <div className="text-left space-y-4">
-            <p className="uppercase text-blue-200 font-semibold tracking-wider">Booking</p>
-            <h2 className="text-3xl md:text-4xl font-bold">Online Booking</h2>
-            <p className="text-white text-lg md:text-xl">
-              Ready to turn your travel dreams into reality? With our seamless online booking
-              system, your next adventure is just a click away. Whether you're planning a tranquil
-              escape or an exhilarating journey, our platform ensures a hassle-free experience from
-              start to finish. Discover the world your way—quick, easy, and tailored to you.
-            </p>
-          </div>
-
-          {/* Right Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <h3 className="text-2xl font-semibold">Book A Tour Deals</h3>
-            <p className="text-sm text-gray-100 mb-2">
-              Get <span className="text-yellow-400 font-bold">50% Off</span> On Your First Adventure
-              Trip With WanderLust. Get More Deal Offers Here.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                name="name"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={handleChange}
-                className="border px-4 py-2 rounded bg-white text-black"
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                value={formData.email}
-                onChange={handleChange}
-                className="border px-4 py-2 rounded bg-white text-black"
-                required
-              />
-
-              <input
-                type="text"
-                name="days"
-                placeholder="Stay Day's"
-                value={formData.days}
-                onChange={handleChange}
-                className="border px-4 py-2 rounded bg-white text-black"
-                required
-              />
-              <input
-                type="date"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                className="border px-4 py-2 rounded bg-white text-black"
-                required
-              />
-
-              <select
-                name="destination"
-                value={formData.destination}
-                onChange={handleChange}
-                className="border px-4 py-2 rounded bg-white text-black"
-              >
-                <option>Sylhet</option>
-                <option>Cox's Bazar</option>
-                <option>Bandarban</option>
-                <option>Chittagong</option>
-              </select>
-
-              <select
-                name="persons"
-                value={formData.persons}
-                onChange={handleChange}
-                className="border px-4 py-2 rounded bg-white text-black"
-              >
-                <option>Persons 1</option>
-                <option>Persons 2</option>
-                <option>Persons 3</option>
-                <option>Persons 4+</option>
-              </select>
-
-              <select
-                name="package"
-                value={formData.package}
-                onChange={handleChange}
-                className="col-span-2 border px-4 py-2 rounded bg-white text-black"
-              >
-                <option>Sylhet Tea Garden</option>
-                <option>Beach Explorer</option>
-                <option>Mountain Trek</option>
-                <option>City Highlights</option>
-              </select>
-
-              <textarea
-                name="request"
-                placeholder="Special Request"
-                value={formData.request}
-                onChange={handleChange}
-                className="col-span-2 border px-4 py-2 rounded resize-none bg-white text-black"
-                rows={3}
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-950 text-white py-2 rounded hover:bg-blue-800 transition"
-            >
-              Book Now
-            </button>
-          </form>
+      {/* Header Banner */}
+      <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] flex items-center justify-center text-center bg-blue-500">
+        <img
+          src="https://i.ibb.co/60rYM9wZ/subscribe-img.jpg"
+          alt="About Us"
+          className="absolute inset-0 w-full h-full object-cover opacity-70"
+        />
+        <div className="relative z-10 text-white">
+          <h1 className="text-4xl font-bold">{pkg.title}</h1>
+          <a href="/" className="text-blue-800 hover:underline">
+            Home
+          </a>
         </div>
       </div>
+
+      {/* Booking Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
+        className="max-w-3xl mx-auto mt-14 p-8 rounded-3xl bg-gradient-to-br from-white to-blue-50 shadow-2xl"
+      >
+        <h2 className="text-4xl font-extrabold text-blue-800 mb-8 text-center">
+          Secure Your Booking
+        </h2>
+
+        <div className="bg-white p-6 rounded-xl shadow-md border border-blue-100">
+          <div className="flex flex-col md:flex-row gap-6 items-center">
+            <img
+              src={pkg.thumbnail || "https://via.placeholder.com/300x200"}
+              alt={pkg.title}
+              className="w-full md:w-1/2 h-60 object-cover rounded-xl shadow"
+            />
+            <div className="flex-1">
+              <h3 className="text-xl font-bold text-blue-900 mb-2">{pkg.title}</h3>
+              <p className="text-gray-600 mb-3">{pkg.shortDescription}</p>
+              <p className="text-lg font-semibold text-blue-700">
+                ৳{pkg.price} BDT / person
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Booking Form */}
+        <form
+          onSubmit={handleBooking}
+          className="mt-10 space-y-6 bg-blue-50 p-6 rounded-xl shadow-md"
+        >
+          <input type="hidden" name="title" value={pkg.title} />
+          <input type="hidden" name="authorEmail" value={pkg.email} />
+          <input type="hidden" name="userEmail" value={user.email} />
+          <input type="hidden" name="packageId" value={id} />
+          <input type="hidden" name="amount" value={totalPrice} />
+
+          {/* User Email */}
+          <div>
+            <label className="block font-semibold text-gray-800 mb-1">
+              Your Email
+            </label>
+            <input
+              type="text"
+              value={user.email}
+              disabled
+              className="w-full px-4 py-2 rounded-lg border bg-gray-100 text-gray-700"
+            />
+          </div>
+
+          {/* Number of Persons */}
+          <div>
+            <label className="block font-semibold text-gray-800 mb-1">
+              Number of Persons
+            </label>
+            <input
+              type="number"
+              min="1"
+              value={persons}
+              onChange={(e) => setPersons(parseInt(e.target.value))}
+              className="w-full px-4 py-2 rounded-lg border text-gray-700"
+            />
+          </div>
+
+          {/* Total Price */}
+          <div className="text-lg font-semibold text-blue-700">
+            Total: ৳{totalPrice} BDT
+          </div>
+
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            type="submit"
+            className="w-full bg-pink-600 hover:bg-pink-700 text-white text-lg font-semibold py-3 rounded-xl shadow-lg transition-all duration-300"
+          >
+            Confirm Payment
+          </motion.button>
+        </form>
+
+        {/* Bkash Payment Modal */}
+        {showModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md"
+            >
+              <h3 className="text-2xl font-bold text-center text-pink-700 mb-4">
+                Bkash Payment
+              </h3>
+              <p className="mb-3 text-center text-gray-600">
+                Enter your Bkash number to proceed
+              </p>
+              <input
+                type="text"
+                placeholder="e.g. 01XXXXXXXXX"
+                value={bkashNumber}
+                onChange={(e) => setBkashNumber(e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300 mb-5"
+              />
+              <div className="flex justify-end gap-4">
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="bg-gray-200 px-4 py-2 rounded-md hover:bg-gray-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleBkashPay}
+                  className="bg-pink-600 hover:bg-pink-700 text-white px-5 py-2 rounded-md font-semibold"
+                >
+                  Pay ৳{totalPrice}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </motion.div>
     </>
   );
-}
+};
+
+export default Booking;

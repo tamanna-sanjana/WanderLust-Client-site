@@ -39,6 +39,7 @@ import PackagePage from "../Pages/FrontEnd/PackagePage";
 import ContractPage from "../Pages/FrontEnd/ContractPage";
 import About from "../Pages/FrontEnd/About";
 import PrivateRoute from "./PrivateRoute";
+import BookingSection from "../Pages/FrontEnd/BookingSection";
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +52,7 @@ export const router = createBrowserRouter([
       { path: "/contact", element: <ContractPage></ContractPage> },
       { path: "/packages", element: <PackagePage></PackagePage> },
       { path: "/details/:id", element: <Details></Details> },
+      { path: "/book/:id", element: <BookingSection></BookingSection> },
       { path: "/blog", element: <Blogs></Blogs> },
       { path: "/blogdetails/:id", element: <BlogDetails></BlogDetails> },
     ],
