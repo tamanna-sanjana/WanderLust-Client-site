@@ -50,15 +50,20 @@ const Booking = () => {
       userEmail: user.email,
       packageId: id,
       persons: persons,
+      status: 0,
     };
 
-    const paymentData = {
-      userEmail: user.email,
-      method: paymentMethod,
-      amount: totalPrice,
-      packageId: id,
-      bkashNumber,
-    };
+const paymentData = {
+  userEmail: user.email,
+  authorEmail: pkg.email,
+  method: paymentMethod,
+  amount: totalPrice,
+  packageId: id,
+  status: 0,
+  bkashNumber,
+  paymentDate: new Date().toISOString(), 
+};
+
 
     try {
       await axios.post("http://localhost:3000/api/bookings", bookingData);

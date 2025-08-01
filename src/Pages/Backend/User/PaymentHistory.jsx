@@ -1,49 +1,50 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Eye } from "lucide-react";
-
-const dummyPayments = [
-  {
-    id: "p001",
-    name: "John Doe",
-    email: "john@example.com",
-    amount: "$99.00",
-    status: "Paid",
-    date: "2025-07-10",
-  },
-  {
-    id: "p002",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    amount: "$49.00",
-    status: "Pending",
-    date: "2025-07-15",
-  },
-  {
-    id: "p003",
-    name: "Alice Johnson",
-    email: "alice@example.com",
-    amount: "$129.00",
-    status: "Failed",
-    date: "2025-07-20",
-  },
-];
+import axios from "axios";
+import { AuthContext } from "../../../Components/Backend/Provider/AuthContext";
 
 const statusBadge = (status) => {
   const base =
-    "px-3 py-1 text-xs font-semibold rounded-full text-white inline-block";
+    "px-3 py-1 text-xs font-semibold rounded-full inline-block text-white";
   switch (status) {
-    case "Paid":
-      return `${base} bg-green-500`;
-    case "Pending":
-      return `${base} bg-yellow-500`;
-    case "Failed":
-      return `${base} bg-red-500`;
+    case 0:
+      return `${base} bg-yellow-500`; // Waiting
+    case 1:
+      return `${base} bg-blue-500`; // Check In
+    case 2:
+      return `${base} bg-green-500`; // Check Out
     default:
-      return `${base} bg-gray-400`;
+      return `${base} bg-gray-400`; // Unknown
   }
 };
 
 const PaymentHistory = () => {
+  const { user } = useContext(AuthContext);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchPosts = async () => {
+    if (!user) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const token = await user.getIdToken();
+      const res = await axios.get("http://localhost:3000/api/mypayments", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setPosts(res.data);
+    } catch (error) {
+      console.error("❌ Fetch error:", error);
+      setError("⚠️ Failed to load bookings.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, [user]);
   return (
     <div className="p-6 md:p-10">
       <h1 className="text-3xl font-bold text-indigo-700 mb-8 text-center">
@@ -55,34 +56,39 @@ const PaymentHistory = () => {
           <thead className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
             <tr>
               <th className="px-6 py-4">#</th>
-              <th className="px-6 py-4">Name</th>
-              <th className="px-6 py-4">Email</th>
+              <th className="px-6 py-4">Package ID</th>
+              <th className="px-6 py-4">Payment Method</th>
+              <th className="px-6 py-4">Phone Number / Card Number</th>
               <th className="px-6 py-4">Amount</th>
-              <th className="px-6 py-4">Status</th>
               <th className="px-6 py-4">Date</th>
-              <th className="px-6 py-4 text-center">Action</th>
+              <th className="px-6 py-4">Time</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {dummyPayments.map((payment, index) => (
+            {posts.map((payment, index) => (
               <tr
                 key={payment.id}
                 className="hover:bg-indigo-50 transition duration-200"
               >
                 <td className="px-6 py-4 font-medium">{index + 1}</td>
-                <td className="px-6 py-4">{payment.name}</td>
-                <td className="px-6 py-4">{payment.email}</td>
+                <td className="px-6 py-4">{payment.packageId}</td>
+                <td className="px-6 py-4">{payment.method}</td>
+                <td className="px-6 py-4">{payment.bkashNumber}</td>
                 <td className="px-6 py-4">{payment.amount}</td>
                 <td className="px-6 py-4">
-                  <span className={statusBadge(payment.status)}>
-                    {payment.status}
-                  </span>
+                  {new Date(payment.paymentDate).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
                 </td>
-                <td className="px-6 py-4">{payment.date}</td>
-                <td className="px-6 py-4 text-center">
-                  <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg shadow-md flex items-center gap-1 text-sm transition">
-                    <Eye size={16} /> View
-                  </button>
+                <td className="px-6 py-4">
+                  {new Date(payment.paymentDate).toLocaleTimeString("en-GB", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    second: "2-digit",
+                    hour12: false, // Use true if you want AM/PM format
+                  })}
                 </td>
               </tr>
             ))}
