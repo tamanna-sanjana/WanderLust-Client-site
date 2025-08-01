@@ -45,6 +45,7 @@ const Booking = () => {
     }
 
     const bookingData = {
+      name:user.displayName,
       title: pkg.title,
       authorEmail: pkg.email,
       userEmail: user.email,
@@ -54,6 +55,7 @@ const Booking = () => {
     };
 
 const paymentData = {
+  name:user.displayName,
   userEmail: user.email,
   authorEmail: pkg.email,
   method: paymentMethod,

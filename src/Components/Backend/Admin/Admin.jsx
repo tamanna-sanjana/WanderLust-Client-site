@@ -1,11 +1,15 @@
-import React from 'react';
+import AnnouncementBanner from "./Home/AnnouncementBanner";
+import StatCard from "./Home/StatCard";
+
 
 const Admin = () => {
     return (
-        <div>
+        <>
+        <StatCard></StatCard>
+        <AnnouncementBanner></AnnouncementBanner>
             
             
-        </div>
+        </>
     );
 };
 

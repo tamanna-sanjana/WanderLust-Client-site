@@ -134,6 +134,10 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             <BookOpen size={20} />
             Book History
           </NavLink>
+          <NavLink to="paymentshistory" className={menuItemClass}>
+            <BookOpen size={20} />
+            Payment History
+          </NavLink>
         </nav>
       </div>
 

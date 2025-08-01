@@ -40,6 +40,10 @@ import ContractPage from "../Pages/FrontEnd/ContractPage";
 import About from "../Pages/FrontEnd/About";
 import PrivateRoute from "./PrivateRoute";
 import BookingSection from "../Pages/FrontEnd/BookingSection";
+import Moderator from "../Components/Backend/Moderator/Moderator";
+import User from "../Components/Backend/User/UserDash";
+import UserDash from "../Components/Backend/User/UserDash";
+import Payment from "../Pages/Backend/Moderator/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -121,6 +125,9 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        index:true,element:<Moderator></Moderator>
+      },
+      {
         path: "/moderatordashboard/package/add",
         element: <AddPackages></AddPackages>,
       },
@@ -144,6 +151,10 @@ export const router = createBrowserRouter([
         path: "/moderatordashboard/book-history",
         element: <BookHistory></BookHistory>,
       },
+      {
+        path: "/moderatordashboard/paymentshistory",
+        element: <Payment></Payment>,
+      },
     ],
   },
   {
@@ -155,6 +166,7 @@ export const router = createBrowserRouter([
     ),
 
     children: [
+      {index:true,element:<UserDash></UserDash>},
       { path: "book-history", element: <BookHistories></BookHistories> },
       { path: "payment-history", element: <PaymentHistory></PaymentHistory> },
     ],
