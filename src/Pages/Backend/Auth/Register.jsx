@@ -89,7 +89,7 @@ export default function Register() {
           displayName: form.name,
           photoURL: uploadedImageUrl,
         }),
-        fetch("http://localhost:3000/adduser", {
+        fetch("https://wander-lust-server-site.vercel.app/adduser", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -131,12 +131,12 @@ const handleGoogleLogin = async () => {
     };
 
     // Upsert user info to backend
-    await axios.post("http://localhost:3000/adduser", userData);
+    await axios.post("https://wander-lust-server-site.vercel.app/adduser", userData);
 
     // Get Firebase token and check role
     const token = await user.getIdToken();
     const roleResponse = await axios.post(
-      "http://localhost:3000/check-role",
+      "https://wander-lust-server-site.vercel.app/check-role",
       {},
       { headers: { Authorization: `Bearer ${token}` } }
     );

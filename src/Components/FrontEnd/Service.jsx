@@ -68,7 +68,7 @@ const Service = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/api/services");
+        const { data } = await axios.get("https://wander-lust-server-site.vercel.app/api/services");
         setServices(data);
       } catch (err) {
         console.error("Failed to fetch services", err);

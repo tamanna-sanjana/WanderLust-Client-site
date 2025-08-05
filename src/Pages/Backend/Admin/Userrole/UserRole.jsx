@@ -14,7 +14,7 @@ const handleSubmit = async (e) => {
   };
 
   try {
-    const { data } = await axios.post("http://localhost:3000/api/roles", newRole);
+    const { data } = await axios.post("https://wander-lust-server-site.vercel.app/api/roles", newRole);
 
     if (data.insertedId || data.acknowledged) {
       setRole("");

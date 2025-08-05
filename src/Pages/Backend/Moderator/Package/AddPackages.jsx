@@ -102,7 +102,7 @@ const AddPackages = () => {
         status: 1,
       };
 
-      await axios.post("http://localhost:3000/packageCollection", packageData);
+      await axios.post("https://wander-lust-server-site.vercel.app/packageCollection", packageData);
 
       Swal.close();
       Swal.fire({

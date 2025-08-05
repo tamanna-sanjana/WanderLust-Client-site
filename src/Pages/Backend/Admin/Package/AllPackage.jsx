@@ -10,7 +10,7 @@ const AllPackage = () => {
   // Fetch packages
   const fetchPackages = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/packages");
+      const response = await axios.get("https://wander-lust-server-site.vercel.app/api/packages");
       setPackages(response.data);
     } catch (error) {
       console.error("❌ Error fetching packages:", error);
@@ -35,7 +35,7 @@ const handleDelete = async (id) => {
 
   if (result.isConfirmed) {
     try {
-      await axios.delete(`http://localhost:3000/api/packages/${id}`);
+      await axios.delete(`https://wander-lust-server-site.vercel.app/api/packages/${id}`);
       Swal.fire("Deleted!", "The package has been deleted.", "success");
       fetchPackages(); // Refresh list
     } catch (error) {

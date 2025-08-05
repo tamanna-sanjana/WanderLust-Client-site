@@ -106,11 +106,11 @@ const AddPackage = () => {
         returnDate: formData.returnDate,
         features: formData.features.split(",").map((f) => f.trim()),
         createdAt: new Date(),
-        email: user?.email || "no-reply@example.com",
+        email: user?.email,
         status: 1,
       };
 
-      await axios.post("http://localhost:3000/packageCollection", packageData);
+      await axios.post("https://wander-lust-server-site.vercel.app/packageCollection", packageData);
 
       Swal.close();
       Swal.fire({

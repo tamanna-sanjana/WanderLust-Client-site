@@ -21,7 +21,7 @@ const GuideSection = () => {
   const fetchGuides = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:3000/api/guides");
+      const res = await axios.get("https://wander-lust-server-site.vercel.app/api/guides");
       const filtered = res.data.filter(guide => guide.status === 1);
       setGuides(filtered);
       setError(null);

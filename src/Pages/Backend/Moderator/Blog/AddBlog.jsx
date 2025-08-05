@@ -88,7 +88,7 @@ const AddBlog = () => {
 
     // ✅ Submit to backend
     try {
-      const res = await axios.post("http://localhost:3000/api/blogs", blogData);
+      const res = await axios.post("https://wander-lust-server-site.vercel.app/api/blogs", blogData);
       
 
       Swal.fire({

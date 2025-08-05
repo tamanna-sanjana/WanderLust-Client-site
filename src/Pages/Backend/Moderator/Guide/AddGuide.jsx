@@ -68,7 +68,7 @@ const AddGuide = () => {
     };
 
     try {
-      await axios.post("http://localhost:3000/api/guides", guideData);
+      await axios.post("https://wander-lust-server-site.vercel.app/api/guides", guideData);
       Swal.fire({
         icon: "success",
         title: "Guide Added Successfully!",

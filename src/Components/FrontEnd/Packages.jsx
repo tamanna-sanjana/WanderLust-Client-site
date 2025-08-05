@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink } from "react-router"; // Use `react-router-dom` not `react-router`
 import { motion } from "framer-motion";
 import axios from "axios";
 
 const Packages = () => {
   const [packages, setPackages] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const packagesPerPage = 6;
 
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/packages");
+        const res = await axios.get("https://wander-lust-server-site.vercel.app/api/packages");
         setPackages(res.data);
       } catch (err) {
         console.error("Failed to fetch packages:", err);
@@ -17,6 +19,14 @@ const Packages = () => {
     };
     fetchPackages();
   }, []);
+
+  // Pagination logic
+  const indexOfLastPackage = currentPage * packagesPerPage;
+  const indexOfFirstPackage = indexOfLastPackage - packagesPerPage;
+  const currentPackages = packages.slice(indexOfFirstPackage, indexOfLastPackage);
+  const totalPages = Math.ceil(packages.length / packagesPerPage);
+
+  const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -38,7 +48,7 @@ const Packages = () => {
         </motion.div>
 
         <div className="grid gap-8 md:grid-cols-3">
-          {packages.map((pkg, index) => (
+          {currentPackages.map((pkg, index) => (
             <motion.div
               key={pkg._id || index}
               className="bg-blue-200 rounded-lg shadow-2xl overflow-hidden border-none hover:shadow-xl transition duration-300"
@@ -74,6 +84,23 @@ const Packages = () => {
                 </NavLink>
               </div>
             </motion.div>
+          ))}
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-center mt-12 space-x-2">
+          {[...Array(totalPages)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() => handlePageChange(i + 1)}
+              className={`px-4 py-2 rounded-full ${
+                currentPage === i + 1
+                  ? "bg-blue-800 text-white"
+                  : "bg-gray-200 text-gray-800 hover:bg-blue-200"
+              }`}
+            >
+              {i + 1}
+            </button>
           ))}
         </div>
       </div>

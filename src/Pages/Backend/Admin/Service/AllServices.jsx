@@ -10,7 +10,7 @@ const AllServices = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/api/services");
+        const { data } = await axios.get("https://wander-lust-server-site.vercel.app/api/services");
         setServices(data);
       } catch (err) {
         console.error("Failed to fetch services", err);
@@ -34,7 +34,7 @@ const AllServices = () => {
 
     if (confirmDelete.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:3000/api/services/${id}`);
+        await axios.delete(`https://wander-lust-server-site.vercel.app/api/services/${id}`);
         setServices((prev) => prev.filter((s) => s._id !== id));
         Swal.fire("Deleted!", "The service has been removed.", "success");
       } catch (err) {

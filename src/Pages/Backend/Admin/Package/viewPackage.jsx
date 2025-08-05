@@ -9,7 +9,7 @@ const ViewPackage = () => {
   useEffect(() => {
     const fetchPackage = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/api/packages/${id}`);
+        const response = await axios.get(`https://wander-lust-server-site.vercel.app/api/packages/${id}`);
         setPackageData(response.data);
       } catch (error) {
         console.error("❌ Error fetching package:", error);

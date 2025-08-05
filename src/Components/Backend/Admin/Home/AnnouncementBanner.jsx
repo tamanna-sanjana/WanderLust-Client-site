@@ -23,9 +23,9 @@ const AnnouncementBanner = () => {
       try {
         const [packageRes, serviceRes, blogRes, guideRes] = await Promise.all([
           axios.get("http://localhost:3000/api/packages"),
-          axios.get("http://localhost:3000/api/services"),
-          axios.get("http://localhost:3000/api/blogs"),
-          axios.get("http://localhost:3000/api/guides"),
+          axios.get("https://wander-lust-server-site.vercel.app/api/services"),
+          axios.get("https://wander-lust-server-site.vercel.app/api/blogs"),
+          axios.get("https://wander-lust-server-site.vercel.app/api/guides"),
         ]);
 
         setPackageCount(packageRes.data.length || 0);

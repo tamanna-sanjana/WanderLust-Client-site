@@ -15,7 +15,7 @@ const AllGuide = () => {
     setError(null);
     try {
       const token = await user.getIdToken();
-      const res = await axios.get("http://localhost:3000/api/guide", {
+      const res = await axios.get("https://wander-lust-server-site.vercel.app/api/guide", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(res.data);
@@ -38,7 +38,7 @@ const AllGuide = () => {
 
     try {
       await axios.put(
-        `http://localhost:3000/api/guide/status/${id}`,
+        `https://wander-lust-server-site.vercel.app/api/guide/status/${id}`,
         { status: newStatus },
         {
           headers: {
@@ -72,7 +72,7 @@ const AllGuide = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:3000/api/guide/${id}`, {
+        await axios.delete(`https://wander-lust-server-site.vercel.app/api/guide/${id}`, {
           headers: {
             Authorization: `Bearer ${await user.getIdToken()}`,
           },

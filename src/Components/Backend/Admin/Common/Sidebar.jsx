@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   FileText,
   Compass,
+  ChartPie
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../Provider/AuthContext";
@@ -26,6 +27,7 @@ const Sidebar = () => {
   const [blogOpen, setBlogOpen] = useState(false);
   const [roleOpen, setRoleOpen] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
+  const [PaymentOpen, setpaymentOpen] = useState(false);
 
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
@@ -147,6 +149,17 @@ const Sidebar = () => {
             links={[
               { to: "guide/add", label: "Add Guide", icon: <FileText size={16} /> },
               { to: "guide/all", label: "All Guides", icon: <FileText size={16} /> },
+            ]}
+          />
+          {/* Booking and Payment Integration */}
+          <Dropdown
+            title="Booking & Payment"
+            icon={<ChartPie size={18} />}
+            isOpen={PaymentOpen}
+            setIsOpen={setpaymentOpen}
+            links={[
+              { to: "booking", label: "Booking", icon: <FileText size={16} /> },
+              { to: "payment", label: "Payment", icon: <FileText size={16} /> },
             ]}
           />
         </nav>

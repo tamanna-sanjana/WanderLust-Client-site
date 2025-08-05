@@ -19,7 +19,7 @@ const Booking = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/api/packages/${id}`)
+      .get(`https://wander-lust-server-site.vercel.app/api/packages/${id}`)
       .then((res) => {
         setPkg(res.data);
         setTotalPrice(res.data.price); // initial total price
@@ -68,8 +68,8 @@ const paymentData = {
 
 
     try {
-      await axios.post("http://localhost:3000/api/bookings", bookingData);
-      await axios.post("http://localhost:3000/api/payments", paymentData);
+      await axios.post("https://wander-lust-server-site.vercel.app/api/bookings", bookingData);
+      await axios.post("https://wander-lust-server-site.vercel.app/api/payments", paymentData);
 
       Swal.fire("Success", "Booking and payment completed!", "success").then(() => {
         setShowModal(false);

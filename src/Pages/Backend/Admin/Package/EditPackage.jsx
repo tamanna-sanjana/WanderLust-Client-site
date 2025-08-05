@@ -24,7 +24,7 @@ const EditPackage = () => {
   useEffect(() => {
     const fetchPackage = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/api/packages/${id}`);
+        const res = await axios.get(`https://wander-lust-server-site.vercel.app/api/packages/${id}`);
         setFormData(res.data);
       } catch (error) {
         console.error("Failed to fetch package:", error.response?.data || error.message);
@@ -44,7 +44,7 @@ const EditPackage = () => {
     e.preventDefault();
     try {
       await axios.patch(
-        `http://localhost:3000/api/update/packages/${id}`,
+        `https://wander-lust-server-site.vercel.app/api/update/packages/${id}`,
         formData,
         { headers: { "Content-Type": "application/json" } }
       );

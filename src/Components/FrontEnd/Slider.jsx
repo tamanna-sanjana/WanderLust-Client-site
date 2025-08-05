@@ -34,7 +34,7 @@ const Slider = () => {
         className="carousel-item relative w-full flex-shrink-0 scroll-snap-align-start"
       >
         <img
-          src="https://i.ibb.co/Z6g6XNcJ/Travel-Banner-1.jpg"
+          src="https://i.ibb.co.com/DDdX1j0r/Whats-App-Image-2025-08-05-at-11-35-28-c9f87a6d.jpg"
           className="w-full"
           alt="Slide 1"
         />
@@ -45,7 +45,7 @@ const Slider = () => {
         className="carousel-item relative w-full flex-shrink-0 scroll-snap-align-start"
       >
         <img
-          src="https://i.ibb.co/Q3zws8Gx/Travel-Banner-2.jpg"
+          src="https://i.ibb.co.com/PsRjwYHM/Whats-App-Image-2025-08-05-at-11-35-28-79169a2b.jpg"
           className="w-full"
           alt="Slide 2"
         />
@@ -56,7 +56,7 @@ const Slider = () => {
         className="carousel-item relative w-full flex-shrink-0 scroll-snap-align-start"
       >
         <img
-          src="https://i.ibb.co/35tDbyF5/Travel-Banner-3.jpg"
+          src="https://i.ibb.co.com/4gKqhQSC/Whats-App-Image-2025-08-05-at-11-35-28-b47b1eb8.jpg"
           className="w-full"
           alt="Slide 3"
         />

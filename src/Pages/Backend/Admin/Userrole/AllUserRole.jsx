@@ -9,7 +9,7 @@ const AllUserRole = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/api/roles");
+        const { data } = await axios.get("https://wander-lust-server-site.vercel.app/api/roles");
         setRoles(data);
       } catch (error) {
         console.error("❌ Failed to fetch roles:", error);
@@ -32,7 +32,7 @@ const AllUserRole = () => {
 
   if (confirmResult.isConfirmed) {
     try {
-      const { data } = await axios.delete(`http://localhost:3000/api/roles/${id}`);
+      const { data } = await axios.delete(`https://wander-lust-server-site.vercel.app/api/roles/${id}`);
 
       if (data.deletedCount > 0) {
         setRoles((prev) => prev.filter((role) => role._id !== id)); // Adjusted for MongoDB _id

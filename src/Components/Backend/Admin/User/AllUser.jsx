@@ -21,7 +21,7 @@ const handleDelete = async (id) => {
 
   if (result.isConfirmed) {
     try {
-      await axios.delete(`http://localhost:3000/adduser/${id}`);
+      await axios.delete(`https://wander-lust-server-site.vercel.app/adduser/${id}`);
       Swal.fire("Deleted!", "The user has been deleted.", "success").then(() => {
         window.location.reload();
       });
@@ -36,7 +36,7 @@ const handleDelete = async (id) => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/adduser");
+        const { data } = await axios.get("https://wander-lust-server-site.vercel.app/adduser");
         setUsers(data);
       } catch (error) {
         console.error("❌ Failed to fetch users:", error);
@@ -50,7 +50,7 @@ const handleDelete = async (id) => {
     if (searchQuery.trim() === "") {
       // Reset to all users if search is empty
       axios
-        .get("http://localhost:3000/adduser")
+        .get("https://wander-lust-server-site.vercel.app/adduser")
         .then((res) => setUsers(res.data))
         .catch((err) => console.error("❌ Failed to fetch users:", err));
       return;
@@ -59,7 +59,7 @@ const handleDelete = async (id) => {
     const delayDebounce = setTimeout(() => {
       axios
         .get(
-          `http://localhost:3000/searchUsers?query=${encodeURIComponent(
+          `https://wander-lust-server-site.vercel.app/searchUsers?query=${encodeURIComponent(
             searchQuery
           )}`
         )
@@ -78,7 +78,7 @@ const handleDelete = async (id) => {
   const handleToggleRole = async (userId, currentRole) => {
     const newRole = currentRole === "user" ? "member" : "user";
     try {
-      await axios.patch(`http://localhost:3000/updateRole/${userId}`, {
+      await axios.patch(`https://wander-lust-server-site.vercel.app/updateRole/${userId}`, {
         role: newRole,
       });
 
@@ -91,7 +91,7 @@ const handleDelete = async (id) => {
       });
 
       // Refresh user list after role update
-      const { data } = await axios.get("http://localhost:3000/adduser");
+      const { data } = await axios.get("https://wander-lust-server-site.vercel.app/adduser");
       setUsers(data);
     } catch (error) {
       console.error("❌ Failed to update role:", error.message);

@@ -17,7 +17,7 @@ const MyPackage = () => {
     setError(null);
     try {
       const token = await user.getIdToken();
-      const res = await axios.get("http://localhost:3000/api/mypost", {
+      const res = await axios.get("https://wander-lust-server-site.vercel.app/api/mypost", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(res.data);
@@ -38,7 +38,7 @@ const MyPackage = () => {
     const newStatus = currentStatus === 1 ? 0 : 1;
 
     try {
-      await axios.put(`http://localhost:3000/api/packages/status/${id}`, {
+      await axios.put(`https://wander-lust-server-site.vercel.app/api/packages/status/${id}`, {
         status: newStatus,
       });
 
@@ -68,7 +68,7 @@ const MyPackage = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:3000/api/packages/${id}`);
+        await axios.delete(`https://wander-lust-server-site.vercel.app/api/packages/${id}`);
         Swal.fire("Deleted!", "The package has been deleted.", "success");
         fetchPosts();
       } catch (error) {

@@ -14,7 +14,7 @@ const AllBlog = () => {
     setError(null);
     try {
       const token = await user.getIdToken();
-      const res = await axios.get("http://localhost:3000/api/myblog", {
+      const res = await axios.get("https://wander-lust-server-site.vercel.app/api/myblog", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(res.data);
@@ -34,7 +34,7 @@ const AllBlog = () => {
     const newStatus = currentStatus === 1 ? 0 : 1;
 
     try {
-      await axios.put(`http://localhost:3000/api/blog/status/${id}`, {
+      await axios.put(`https://wander-lust-server-site.vercel.app/api/blog/status/${id}`, {
         status: newStatus,
       });
 
@@ -63,7 +63,7 @@ const AllBlog = () => {
 
     if (result.isConfirmed) {
       try {
-        await axios.delete(`http://localhost:3000/api/blog/${id}`);
+        await axios.delete(`https://wander-lust-server-site.vercel.app/api/blog/${id}`);
         Swal.fire("Deleted!", "The blog has been deleted.", "success");
         fetchPosts();
       } catch (error) {

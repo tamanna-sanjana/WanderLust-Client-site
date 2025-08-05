@@ -50,10 +50,10 @@ export default function BookingSection({ selectedPackage, onClose }) {
 
     try {
       // 1️⃣ Save booking info
-      await axios.post("http://localhost:3000/api/booking", formData);
+      await axios.post("https://wander-lust-server-site.vercel.app/api/booking", formData);
 
       // 2️⃣ Mock payment
-      const paymentRes = await axios.post("http://localhost:3000/api/payment", {
+      const paymentRes = await axios.post("https://wander-lust-server-site.vercel.app/api/payment", {
         email: formData.email,
         amount: formData.price,
         method: "Bkash",

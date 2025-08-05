@@ -19,7 +19,7 @@ const BookHistory = () => {
 
     try {
       const token = await user.getIdToken();
-      const res = await axios.get("http://localhost:3000/api/booking", {
+      const res = await axios.get("https://wander-lust-server-site.vercel.app/api/booking", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setBookings(res.data);
@@ -42,7 +42,7 @@ const BookHistory = () => {
   try {
     const token = await user.getIdToken();
     await axios.put(
-      `http://localhost:3000/api/booking/${bookingId}`,
+      `https://wander-lust-server-site.vercel.app/api/booking/${bookingId}`,
       { status: newStatus },
       { headers: { Authorization: `Bearer ${token}` } }
     );

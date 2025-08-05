@@ -25,7 +25,7 @@ const AddUser = () => {
   useEffect(() => {
     const fetchRoles = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/api/roles");
+        const { data } = await axios.get("https://wander-lust-server-site.vercel.app/api/roles");
         setRoles(data);
       } catch (error) {
         console.error("❌ Failed to fetch roles:", error);
@@ -97,7 +97,7 @@ const handleSubmit = async (e) => {
       });
 
       // Step 4: Save user to backend
-      await axios.post("http://localhost:3000/adduser", {
+      await axios.post("https://wander-lust-server-site.vercel.app/adduser", {
         name: formData.fullName,
         email: formData.email,
         photoURL: uploadedImageUrl,

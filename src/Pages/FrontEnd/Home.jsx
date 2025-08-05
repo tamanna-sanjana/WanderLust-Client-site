@@ -8,20 +8,30 @@ import TestimonialSection from '../../Components/FrontEnd/TestimonialSection';
 import BookingSection from './BookingSection';
 
 const Home = () => {
-     return (
-          <>
+  return (
+    <div className="bg-white text-blue-950 overflow-x-hidden">
+      {/* Hero Slider */}
+      <Slider />
 
-          <Slider></Slider>
-          <AboutUs></AboutUs>
-          <Service></Service>
-          <Packages></Packages>
-          <BookingSection></BookingSection>
-          <GuideSection></GuideSection>
-          <TestimonialSection></TestimonialSection>
-          
-               
-          </>
-     );
+      {/* About Us Section */}
+      <AboutUs />
+
+      {/* Services Section */}
+      <Service />
+
+      {/* Travel Packages */}
+      <Packages />
+
+      {/* Booking Section */}
+      <BookingSection />
+
+      {/* Guide Section */}
+      <GuideSection />
+
+      {/* Testimonials */}
+      <TestimonialSection />
+    </div>
+  );
 };
 
 export default Home;

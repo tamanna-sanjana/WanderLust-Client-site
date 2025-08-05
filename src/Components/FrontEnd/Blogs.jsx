@@ -15,7 +15,7 @@ const Blogs = () => {
   const fetchBlogs = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:3000/api/blogs");
+      const res = await axios.get("https://wander-lust-server-site.vercel.app/api/blogs");
       setBlogs(res.data);
       setError(null);
     } catch (err) {

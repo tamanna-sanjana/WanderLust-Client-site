@@ -17,7 +17,7 @@ const UpdateUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:3000/adduser/${id}`);
+        const { data } = await axios.get(`https://wander-lust-server-site.vercel.app/adduser/${id}`);
         setFormData({
           name: data.name,
           email: data.email,
@@ -61,7 +61,7 @@ const UpdateUser = () => {
         imageUrl = await uploadImage(formData.photoURL);
       }
 
-      await axios.patch(`http://localhost:3000/adduser/${id}`, {
+      await axios.patch(`https://wander-lust-server-site.vercel.app/adduser/${id}`, {
         name: formData.name,
         email: formData.email,
         photoURL: imageUrl,

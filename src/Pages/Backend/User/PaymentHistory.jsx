@@ -30,7 +30,7 @@ const PaymentHistory = () => {
     setError(null);
     try {
       const token = await user.getIdToken();
-      const res = await axios.get("http://localhost:3000/api/mypayments", {
+      const res = await axios.get("https://wander-lust-server-site.vercel.app/api/mypayments", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(res.data);

@@ -44,6 +44,8 @@ import Moderator from "../Components/Backend/Moderator/Moderator";
 import User from "../Components/Backend/User/UserDash";
 import UserDash from "../Components/Backend/User/UserDash";
 import Payment from "../Pages/Backend/Moderator/Payment";
+import Booking from "../Pages/Backend/Admin/Booking & Reservation/Booking";
+import Payments from "../Pages/Backend/Admin/Booking & Reservation/Payments";
 
 export const router = createBrowserRouter([
   {
@@ -110,6 +112,8 @@ export const router = createBrowserRouter([
       { path: "/admindashboard/blog/add", element: <AddBlog></AddBlog> },
       { path: "/admindashboard/blog/all", element: <AllBlog></AllBlog> },
       { path: "/admindashboard/roles/add", element: <UserRole></UserRole> },
+      { path: "/admindashboard/booking", element: <Booking></Booking> },
+      { path: "/admindashboard/payment", element: <Payments></Payments> },
       {
         path: "/admindashboard/roles/all",
         element: <AllUserRole></AllUserRole>,
@@ -129,7 +133,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/moderatordashboard/package/add",
-        element: <AddPackages></AddPackages>,
+        element: <AddPackage></AddPackage>,
       },
       {
         path: "/moderatordashboard/package/all",

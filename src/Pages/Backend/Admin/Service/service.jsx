@@ -71,7 +71,7 @@ const handleSubmit = async (e) => {
       email: user.email,
     };
 
-    await axios.post("http://localhost:3000/api/services", serviceData);
+    await axios.post("https://wander-lust-server-site.vercel.app/api/services", serviceData);
 
     Swal.fire("✅ Success", "Service uploaded successfully", "success").then(() => {
       window.location.reload(); // ✅ Correct way to reload

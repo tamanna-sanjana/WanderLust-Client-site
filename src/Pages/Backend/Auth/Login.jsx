@@ -26,7 +26,7 @@ export default function Login() {
 
       // ✅ Get role
       const roleResponse = await axios.post(
-        "http://localhost:3000/check-role",
+        "https://wander-lust-server-site.vercel.app/check-role",
         {},
         {
           headers: {
@@ -72,7 +72,7 @@ const handleGoogleLogin = async () => {
 
     // ✅ Save or update user in DB
     await axios.post(
-      "http://localhost:3000/adduser",
+      "https://wander-lust-server-site.vercel.app/adduser",
       {
         name: user.displayName,
         email: user.email,
@@ -88,7 +88,7 @@ const handleGoogleLogin = async () => {
 
     // ✅ Fetch user role
     const roleRes = await axios.post(
-      "http://localhost:3000/check-role",
+      "https://wander-lust-server-site.vercel.app/check-role",
       {},
       {
         headers: {

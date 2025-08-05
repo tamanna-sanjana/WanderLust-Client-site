@@ -15,7 +15,7 @@ const StatCard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/adduser");
+        const response = await axios.get("https://wander-lust-server-site.vercel.app/adduser");
         const allUsers = response.data || [];
 
         const adminCount = allUsers.filter(u => u.role === "admin").length;

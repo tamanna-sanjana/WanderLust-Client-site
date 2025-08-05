@@ -10,7 +10,7 @@ const BlogDetails = () => {
     const fetchBlog = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/blog/${id}`
+          `https://wander-lust-server-site.vercel.app/api/blog/${id}`
         );
         setBlogData(response.data);
       } catch (error) {
